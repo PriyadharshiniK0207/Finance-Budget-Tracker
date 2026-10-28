@@ -33,7 +33,7 @@ const EditProfileScreen = ({ navigation }) => {
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
             <Text style={styles.headerTitle}>Access Denied</Text>
-            <Text style={styles.headerSubtitle}>Customer Only Screen (Exam Req #3)</Text>
+            <Text style={styles.headerSubtitle}>Customer Only Feature</Text>
           </View>
         </View>
 

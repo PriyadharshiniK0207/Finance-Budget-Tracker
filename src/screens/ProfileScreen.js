@@ -36,7 +36,7 @@ const ProfileScreen = ({ navigation }) => {
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <CustomHeader
         title="Profile & Budget"
-        subtitle={isAdmin ? 'Customer Profile (Admin Audit)' : 'Personal Profile & Budget'}
+        subtitle={isAdmin ? 'Administrator Overview' : 'Personal Profile & Budget'}
         navigation={navigation}
       />
 
@@ -44,19 +44,6 @@ const ProfileScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* Admin Restriction Banner (Screen 3: Profile is Customer Only) */}
-        {isAdmin && (
-          <View style={styles.adminBannerCard}>
-            <Ionicons name="information-circle" size={22} color={colors.expense} />
-            <View style={{ marginLeft: 12, flex: 1 }}>
-              <Text style={styles.adminBannerTitle}>Customer Only Screen (Exam Req #3)</Text>
-              <Text style={styles.adminBannerDesc}>
-                Profile and Edit Profile features are reserved for Customer accounts only. Administrators do not have access to customer profile editing.
-              </Text>
-            </View>
-          </View>
-        )}
-
         {/* User Profile Card */}
         <View style={styles.profileCard}>
           <View style={styles.avatar}>
@@ -236,27 +223,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 12,
     paddingBottom: 28,
-  },
-  adminBannerCard: {
-    flexDirection: 'row',
-    backgroundColor: colors.accentLight,
-    padding: 14,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: colors.accentBorder,
-    marginBottom: 14,
-    alignItems: 'center',
-  },
-  adminBannerTitle: {
-    fontSize: 13,
-    fontWeight: '800',
-    color: colors.primaryDark,
-  },
-  adminBannerDesc: {
-    fontSize: 11,
-    color: colors.textSecondary,
-    marginTop: 2,
-    lineHeight: 15,
   },
   profileCard: {
     backgroundColor: colors.surface,
