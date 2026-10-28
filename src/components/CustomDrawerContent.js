@@ -168,12 +168,22 @@ const CustomDrawerContent = (props) => {
         {isAdmin && (
           <View style={styles.adminSection}>
             <Text style={styles.sectionHeader}>ADMINISTRATIVE CONTROLS</Text>
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => navigateTo('MainTabs', { screen: 'Profile' })}
+              activeOpacity={0.7}
+            >
+              <View style={[styles.iconBox, { backgroundColor: '#DBEAFE' }]}>
+                <Ionicons name="person-circle-outline" size={20} color={colors.primary} />
+              </View>
+              <Text style={styles.menuItemText}>Admin Profile Settings</Text>
+            </TouchableOpacity>
             <View style={styles.adminInfoCard}>
               <Ionicons name="shield-outline" size={20} color={colors.primary} />
               <View style={{ marginLeft: 10, flex: 1 }}>
                 <Text style={styles.adminInfoTitle}>Admin Mode Active</Text>
                 <Text style={styles.adminInfoDesc}>
-                  Customer-only screens (Transactions, Categories, Profile editing) are securely restricted.
+                  Global platform auditing enabled. You can edit your administrator profile parameters.
                 </Text>
               </View>
             </View>

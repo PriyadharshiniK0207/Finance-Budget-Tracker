@@ -26,11 +26,6 @@ const EditProfileScreen = ({ navigation }) => {
   const [errors, setErrors] = useState({});
 
   const handleSave = () => {
-    if (isAdmin) {
-      Alert.alert('Restricted Action', 'Admin users cannot edit customer profile data.');
-      return;
-    }
-
     const validation = validateProfile({ name, email, phone, budget });
     if (!validation.isValid) {
       setErrors(validation.errors);
@@ -59,8 +54,10 @@ const EditProfileScreen = ({ navigation }) => {
           <Ionicons name="arrow-back" size={22} color={colors.text} />
         </TouchableOpacity>
         <View style={styles.headerTitleWrap}>
-          <Text style={styles.headerTitle}>Edit Profile</Text>
-          <Text style={styles.headerSubtitle}>Customer Account Parameters</Text>
+          <Text style={styles.headerTitle}>{isAdmin ? 'Edit Admin Profile' : 'Edit Profile'}</Text>
+          <Text style={styles.headerSubtitle}>
+            {isAdmin ? 'Administrator Profile Parameters' : 'Customer Account Parameters'}
+          </Text>
         </View>
       </View>
 
@@ -73,9 +70,13 @@ const EditProfileScreen = ({ navigation }) => {
           contentContainerStyle={styles.scrollContent}
         >
           <View style={styles.card}>
-            <Text style={styles.sectionTitle}>Customer Information</Text>
+            <Text style={styles.sectionTitle}>
+              {isAdmin ? 'Administrator Details' : 'Customer Information'}
+            </Text>
             <Text style={styles.sectionSubtitle}>
-              Update your account details and monthly spending limit
+              {isAdmin
+                ? 'Update your administrator name, contact, and system threshold'
+                : 'Update your account details and monthly spending limit'}
             </Text>
 
             {/* Name */}
@@ -141,7 +142,9 @@ const EditProfileScreen = ({ navigation }) => {
 
             {/* Monthly Budget Target */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Monthly Budget Target (₹) *</Text>
+              <Text style={styles.label}>
+                {isAdmin ? 'System Budget Allocation (₹) *' : 'Monthly Budget Target (₹) *'}
+              </Text>
               <View style={[styles.inputWrapper, errors.budget && styles.inputWrapperError]}>
                 <Ionicons name="wallet-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
@@ -166,7 +169,9 @@ const EditProfileScreen = ({ navigation }) => {
               activeOpacity={0.8}
             >
               <Ionicons name="checkmark-circle" size={20} color="#FFFFFF" style={{ marginRight: 8 }} />
-              <Text style={styles.saveBtnText}>Save Profile Changes</Text>
+              <Text style={styles.saveBtnText}>
+                {isAdmin ? 'Save Admin Profile' : 'Save Profile Changes'}
+              </Text>
             </TouchableOpacity>
 
             {/* Cancel Button */}

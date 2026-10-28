@@ -17,18 +17,6 @@ const ProfileScreen = ({ navigation }) => {
   const { currentUser, isAdmin, isCustomer, switchRole, overallTotals } = useFinance();
 
   const handleEditPress = () => {
-    if (isAdmin) {
-      Alert.alert(
-        'Access Restricted',
-        'Customer Profile Editing is restricted to Customer accounts. Please switch to Customer mode to edit profile details.',
-        [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'Switch to Customer', onPress: () => switchRole('customer') },
-        ]
-      );
-      return;
-    }
-
     navigation.navigate('EditProfile');
   };
 
@@ -56,22 +44,15 @@ const ProfileScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* Admin Restriction Notice */}
+        {/* Admin Identity Card */}
         {isAdmin && (
-          <View style={styles.restrictedCard}>
-            <Ionicons name="warning" size={24} color={colors.warning} />
+          <View style={styles.adminBannerCard}>
+            <Ionicons name="shield-checkmark" size={24} color={colors.primary} />
             <View style={{ marginLeft: 12, flex: 1 }}>
-              <Text style={styles.restrictedTitle}>Customer-Only Screen</Text>
-              <Text style={styles.restrictedDesc}>
-                Admin accounts cannot edit customer profile parameters. Switch to customer role to enable profile editing mode.
+              <Text style={styles.adminBannerTitle}>Administrator Account</Text>
+              <Text style={styles.adminBannerDesc}>
+                Full management privileges. You can edit your administrator name, contact, and system parameters below.
               </Text>
-              <TouchableOpacity
-                style={styles.switchBtn}
-                onPress={() => switchRole('customer')}
-                activeOpacity={0.8}
-              >
-                <Text style={styles.switchBtnText}>Switch to Customer Mode</Text>
-              </TouchableOpacity>
             </View>
           </View>
         )}
@@ -103,12 +84,14 @@ const ProfileScreen = ({ navigation }) => {
 
           {/* Edit Profile CTA Button */}
           <TouchableOpacity
-            style={[styles.editButton, isAdmin && styles.editButtonDisabled]}
+            style={styles.editButton}
             onPress={handleEditPress}
             activeOpacity={0.8}
           >
             <Ionicons name="create-outline" size={18} color="#FFFFFF" style={{ marginRight: 6 }} />
-            <Text style={styles.editButtonText}>Edit Profile Information</Text>
+            <Text style={styles.editButtonText}>
+              {isAdmin ? 'Edit Admin Profile' : 'Edit Profile Information'}
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -248,6 +231,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 12,
     paddingBottom: 28,
+  },
+  adminBannerCard: {
+    flexDirection: 'row',
+    backgroundColor: colors.primaryLight,
+    padding: 14,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: colors.primarySoft,
+    marginBottom: 14,
+    alignItems: 'center',
+  },
+  adminBannerTitle: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: colors.primaryDark,
+  },
+  adminBannerDesc: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginTop: 2,
+    lineHeight: 16,
   },
   restrictedCard: {
     flexDirection: 'row',

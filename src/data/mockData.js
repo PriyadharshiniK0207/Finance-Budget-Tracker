@@ -440,5 +440,8 @@ export const defaultAdmin = {
   phone: '9123456780',
   role: 'admin',
   department: 'Financial Auditing & Security',
+  accountNumber: 'ADM-2024-0012',
+  monthlyBudget: 150000,
   joinedDate: 'January 2024',
+  currency: '₹',
 };
