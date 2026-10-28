@@ -73,18 +73,18 @@ const SignUpScreen = ({ navigation }) => {
               onPress={() => navigation.goBack()}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             >
-              <Ionicons name="arrow-back" size={22} color={colors.text} />
+              <Ionicons name="arrow-back" size={20} color={colors.primary} />
             </TouchableOpacity>
             <View style={styles.headerTextWrap}>
-              <Text style={styles.headerTitle}>Create Account</Text>
-              <Text style={styles.headerSubtitle}>Start tracking your finances smartly</Text>
+              <Text style={styles.preTitle}>MODERN WEALTH STUDIO</Text>
+              <Text style={styles.headerTitle}>Open Wealth Account</Text>
             </View>
           </View>
 
           {/* Form Card */}
           <View style={styles.card}>
             {/* Role Selection */}
-            <Text style={styles.inputLabel}>Register As</Text>
+            <Text style={styles.inputLabel}>ACCOUNT MEMBERSHIP TYPE</Text>
             <View style={styles.roleContainer}>
               <TouchableOpacity
                 style={[
@@ -96,7 +96,7 @@ const SignUpScreen = ({ navigation }) => {
               >
                 <Ionicons
                   name="person"
-                  size={15}
+                  size={14}
                   color={role === 'customer' ? '#FFFFFF' : colors.textSecondary}
                   style={{ marginRight: 6 }}
                 />
@@ -120,7 +120,7 @@ const SignUpScreen = ({ navigation }) => {
               >
                 <Ionicons
                   name="shield-checkmark"
-                  size={15}
+                  size={14}
                   color={role === 'admin' ? '#FFFFFF' : colors.textSecondary}
                   style={{ marginRight: 6 }}
                 />
@@ -130,19 +130,19 @@ const SignUpScreen = ({ navigation }) => {
                     role === 'admin' && styles.roleButtonTextActive,
                   ]}
                 >
-                  Admin
+                  Administrator
                 </Text>
               </TouchableOpacity>
             </View>
 
             {/* Full Name */}
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Full Name *</Text>
+              <Text style={styles.inputLabel}>FULL LEGAL NAME *</Text>
               <View style={[styles.inputWrapper, errors.name && styles.inputWrapperError]}>
-                <Ionicons name="person-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
+                <Ionicons name="person-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="e.g. Priyadharshini K"
+                  placeholder="e.g. Vikram or Priyadharshini K"
                   placeholderTextColor={colors.textMuted}
                   value={name}
                   onChangeText={(text) => {
@@ -156,12 +156,12 @@ const SignUpScreen = ({ navigation }) => {
 
             {/* Email Address */}
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Email Address *</Text>
+              <Text style={styles.inputLabel}>EMAIL ADDRESS *</Text>
               <View style={[styles.inputWrapper, errors.email && styles.inputWrapperError]}>
-                <Ionicons name="mail-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
+                <Ionicons name="mail-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="e.g. priya@example.com"
+                  placeholder="e.g. vikram@gmail.com"
                   placeholderTextColor={colors.textMuted}
                   value={email}
                   onChangeText={(text) => {
@@ -177,9 +177,9 @@ const SignUpScreen = ({ navigation }) => {
 
             {/* Phone Number */}
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Mobile Phone Number *</Text>
+              <Text style={styles.inputLabel}>MOBILE PHONE NUMBER *</Text>
               <View style={[styles.inputWrapper, errors.phone && styles.inputWrapperError]}>
-                <Ionicons name="call-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
+                <Ionicons name="call-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="e.g. 9876543210"
@@ -198,9 +198,9 @@ const SignUpScreen = ({ navigation }) => {
 
             {/* Password */}
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Password (min 6 characters) *</Text>
+              <Text style={styles.inputLabel}>CONFIDENTIAL PASSWORD (MIN 6 CHARACTERS) *</Text>
               <View style={[styles.inputWrapper, errors.password && styles.inputWrapperError]}>
-                <Ionicons name="lock-closed-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
+                <Ionicons name="lock-closed-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Create a strong password"
@@ -216,7 +216,7 @@ const SignUpScreen = ({ navigation }) => {
                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                   <Ionicons
                     name={showPassword ? 'eye-off-outline' : 'eye-outline'}
-                    size={20}
+                    size={19}
                     color={colors.textMuted}
                   />
                 </TouchableOpacity>
@@ -226,12 +226,12 @@ const SignUpScreen = ({ navigation }) => {
 
             {/* Confirm Password */}
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Confirm Password *</Text>
+              <Text style={styles.inputLabel}>VERIFY PASSWORD *</Text>
               <View style={[styles.inputWrapper, errors.confirmPassword && styles.inputWrapperError]}>
-                <Ionicons name="shield-checkmark-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
+                <Ionicons name="shield-checkmark-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="Re-enter password"
+                  placeholder="Re-enter security password"
                   placeholderTextColor={colors.textMuted}
                   value={confirmPassword}
                   onChangeText={(text) => {
@@ -251,15 +251,15 @@ const SignUpScreen = ({ navigation }) => {
               onPress={handleSignUp}
               activeOpacity={0.8}
             >
-              <Text style={styles.primaryButtonText}>Create Account</Text>
-              <Ionicons name="checkmark-circle" size={18} color="#FFFFFF" style={{ marginLeft: 6 }} />
+              <Text style={styles.primaryButtonText}>Establish Wealth Account</Text>
+              <Ionicons name="checkmark-circle" size={17} color={colors.accent} style={{ marginLeft: 6 }} />
             </TouchableOpacity>
 
             {/* Return to Sign In */}
             <View style={styles.switchRow}>
               <Text style={styles.switchText}>Already have an account? </Text>
               <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-                <Text style={styles.switchLink}>Sign In</Text>
+                <Text style={styles.switchLink}>Sign In Here</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: 20,
-    paddingTop: 12,
+    paddingTop: 14,
     paddingBottom: 32,
   },
   header: {
@@ -288,8 +288,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   backBtn: {
-    width: 40,
-    height: 40,
+    width: 38,
+    height: 38,
     borderRadius: 10,
     backgroundColor: colors.surface,
     alignItems: 'center',
@@ -301,15 +301,17 @@ const styles = StyleSheet.create({
   headerTextWrap: {
     flex: 1,
   },
+  preTitle: {
+    fontSize: 9,
+    fontWeight: '800',
+    color: colors.accentDark,
+    letterSpacing: 1.5,
+  },
   headerTitle: {
     fontSize: 20,
     fontWeight: '800',
-    color: colors.text,
-  },
-  headerSubtitle: {
-    fontSize: 12,
-    color: colors.textSecondary,
-    marginTop: 2,
+    color: colors.primary,
+    letterSpacing: -0.3,
   },
   card: {
     backgroundColor: colors.surface,
@@ -318,20 +320,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     elevation: 3,
-    shadowColor: '#000',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
+    shadowOpacity: 0.05,
     shadowRadius: 6,
   },
   inputLabel: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: colors.text,
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.textMuted,
+    letterSpacing: 0.8,
     marginBottom: 6,
   },
   roleContainer: {
     flexDirection: 'row',
-    gap: 10,
+    gap: 8,
     marginBottom: 16,
   },
   roleButton: {
@@ -340,23 +343,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 10,
-    borderRadius: 12,
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: colors.border,
-    backgroundColor: colors.cardAlt,
+    backgroundColor: colors.background,
   },
   roleButtonActiveCustomer: {
-    backgroundColor: colors.incomeDark,
-    borderColor: colors.incomeDark,
+    backgroundColor: colors.secondary,
+    borderColor: colors.secondaryDark,
   },
   roleButtonActiveAdmin: {
     backgroundColor: colors.primary,
-    borderColor: colors.primary,
+    borderColor: colors.primaryDark,
   },
   roleButtonText: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '700',
     color: colors.textSecondary,
+    letterSpacing: 0.2,
   },
   roleButtonTextActive: {
     color: '#FFFFFF',
@@ -367,7 +371,7 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.cardAlt,
+    backgroundColor: colors.background,
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: 12,
@@ -384,7 +388,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 11,
     fontSize: 14,
-    color: colors.text,
+    color: colors.primary,
   },
   errorText: {
     fontSize: 11,
@@ -398,18 +402,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.primary,
     paddingVertical: 14,
-    borderRadius: 14,
+    borderRadius: 12,
     marginTop: 8,
     elevation: 3,
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.25,
     shadowRadius: 5,
+    borderWidth: 1,
+    borderColor: colors.accentDark,
   },
   primaryButtonText: {
     color: '#FFFFFF',
-    fontSize: 15,
-    fontWeight: '700',
+    fontSize: 14,
+    fontWeight: '800',
+    letterSpacing: 0.3,
   },
   switchRow: {
     flexDirection: 'row',
@@ -418,13 +425,15 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   switchText: {
-    fontSize: 13,
+    fontSize: 12,
     color: colors.textSecondary,
+    fontWeight: '500',
   },
   switchLink: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: colors.primary,
+    fontSize: 12,
+    fontWeight: '800',
+    color: colors.secondaryDark,
+    letterSpacing: 0.2,
   },
 });
 

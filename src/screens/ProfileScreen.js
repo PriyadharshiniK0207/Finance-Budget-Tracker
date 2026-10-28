@@ -35,8 +35,8 @@ const ProfileScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <CustomHeader
-        title="My Profile"
-        subtitle="Account & Budget Settings"
+        title="Profile & Treasury"
+        subtitle={isAdmin ? 'Administrator Settings' : 'Personal Budget Settings'}
         navigation={navigation}
       />
 
@@ -47,11 +47,11 @@ const ProfileScreen = ({ navigation }) => {
         {/* Admin Identity Card */}
         {isAdmin && (
           <View style={styles.adminBannerCard}>
-            <Ionicons name="shield-checkmark" size={24} color={colors.primary} />
+            <Ionicons name="shield-checkmark" size={22} color={colors.accentDark} />
             <View style={{ marginLeft: 12, flex: 1 }}>
               <Text style={styles.adminBannerTitle}>Administrator Account</Text>
               <Text style={styles.adminBannerDesc}>
-                Full management privileges. You can edit your administrator name, contact, and system parameters below.
+                Full management and auditing privileges active. You can edit your administrator profile parameters below.
               </Text>
             </View>
           </View>
@@ -75,7 +75,7 @@ const ProfileScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.roleBadge}>
-              <Ionicons name="checkmark-circle" size={12} color={colors.incomeDark} />
+              <Ionicons name="checkmark-circle" size={12} color={isAdmin ? colors.accentDark : colors.secondary} />
               <Text style={styles.roleBadgeText}>
                 {isAdmin ? 'Administrator' : 'Verified Customer'}
               </Text>
@@ -88,9 +88,9 @@ const ProfileScreen = ({ navigation }) => {
             onPress={handleEditPress}
             activeOpacity={0.8}
           >
-            <Ionicons name="create-outline" size={18} color="#FFFFFF" style={{ marginRight: 6 }} />
+            <Ionicons name="create-outline" size={16} color={colors.accent} style={{ marginRight: 6 }} />
             <Text style={styles.editButtonText}>
-              {isAdmin ? 'Edit Admin Profile' : 'Edit Profile Information'}
+              {isAdmin ? 'Edit Administrator Profile' : 'Edit Profile Information'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -100,8 +100,8 @@ const ProfileScreen = ({ navigation }) => {
           <View style={styles.budgetCard}>
             <View style={styles.budgetHeader}>
               <View>
-                <Text style={styles.budgetTitle}>Monthly Budget Limit</Text>
-                <Text style={styles.budgetSubtitle}>Personal spending threshold</Text>
+                <Text style={styles.budgetTitle}>Monthly Budget Allocation</Text>
+                <Text style={styles.budgetSubtitle}>Personal treasury threshold</Text>
               </View>
               <Text style={styles.budgetAmount}>₹{budget.toLocaleString('en-IN')}</Text>
             </View>
@@ -113,7 +113,7 @@ const ProfileScreen = ({ navigation }) => {
                   styles.barFill,
                   {
                     width: `${budgetUsedPercent}%`,
-                    backgroundColor: budgetUsedPercent > 90 ? colors.expense : colors.primary,
+                    backgroundColor: budgetUsedPercent > 90 ? colors.expense : colors.secondary,
                   },
                 ]}
               />
@@ -121,20 +121,20 @@ const ProfileScreen = ({ navigation }) => {
 
             <View style={styles.budgetDetailsRow}>
               <View>
-                <Text style={styles.budgetLabel}>Spent</Text>
+                <Text style={styles.budgetLabel}>Disbursed</Text>
                 <Text style={[styles.budgetValue, { color: colors.expense }]}>
                   ₹{spentThisMonth.toLocaleString('en-IN')}
                 </Text>
               </View>
               <View style={{ alignItems: 'center' }}>
                 <Text style={styles.budgetLabel}>Utilization</Text>
-                <Text style={[styles.budgetValue, { color: colors.text }]}>
+                <Text style={[styles.budgetValue, { color: colors.primary }]}>
                   {budgetUsedPercent}%
                 </Text>
               </View>
               <View style={{ alignItems: 'flex-end' }}>
-                <Text style={styles.budgetLabel}>Remaining</Text>
-                <Text style={[styles.budgetValue, { color: colors.incomeDark }]}>
+                <Text style={styles.budgetLabel}>Available Reserve</Text>
+                <Text style={[styles.budgetValue, { color: colors.income }]}>
                   ₹{remainingBudget.toLocaleString('en-IN')}
                 </Text>
               </View>
@@ -144,19 +144,19 @@ const ProfileScreen = ({ navigation }) => {
 
         {/* Profile Details List */}
         <View style={styles.detailsCard}>
-          <Text style={styles.cardHeader}>Personal & Account Details</Text>
+          <Text style={styles.cardHeader}>Personal & Account Credentials</Text>
 
           <View style={styles.detailRow}>
             <View style={styles.detailLeft}>
-              <Ionicons name="person-outline" size={18} color={colors.textSecondary} />
-              <Text style={styles.detailLabel}>Full Name</Text>
+              <Ionicons name="person-outline" size={17} color={colors.textMuted} />
+              <Text style={styles.detailLabel}>Full Legal Name</Text>
             </View>
             <Text style={styles.detailValue}>{currentUser?.name}</Text>
           </View>
 
           <View style={styles.detailRow}>
             <View style={styles.detailLeft}>
-              <Ionicons name="mail-outline" size={18} color={colors.textSecondary} />
+              <Ionicons name="mail-outline" size={17} color={colors.textMuted} />
               <Text style={styles.detailLabel}>Email Address</Text>
             </View>
             <Text style={styles.detailValue}>{currentUser?.email}</Text>
@@ -164,24 +164,24 @@ const ProfileScreen = ({ navigation }) => {
 
           <View style={styles.detailRow}>
             <View style={styles.detailLeft}>
-              <Ionicons name="call-outline" size={18} color={colors.textSecondary} />
-              <Text style={styles.detailLabel}>Mobile Number</Text>
+              <Ionicons name="call-outline" size={17} color={colors.textMuted} />
+              <Text style={styles.detailLabel}>Registered Phone</Text>
             </View>
             <Text style={styles.detailValue}>+91 {currentUser?.phone}</Text>
           </View>
 
           <View style={styles.detailRow}>
             <View style={styles.detailLeft}>
-              <Ionicons name="calendar-outline" size={18} color={colors.textSecondary} />
-              <Text style={styles.detailLabel}>Member Since</Text>
+              <Ionicons name="calendar-outline" size={17} color={colors.textMuted} />
+              <Text style={styles.detailLabel}>Charter Since</Text>
             </View>
             <Text style={styles.detailValue}>{currentUser?.joinedDate || 'October 2026'}</Text>
           </View>
 
           <View style={[styles.detailRow, { borderBottomWidth: 0 }]}>
             <View style={styles.detailLeft}>
-              <Ionicons name="cash-outline" size={18} color={colors.textSecondary} />
-              <Text style={styles.detailLabel}>Currency Format</Text>
+              <Ionicons name="cash-outline" size={17} color={colors.textMuted} />
+              <Text style={styles.detailLabel}>Accounting Currency</Text>
             </View>
             <Text style={styles.detailValue}>INR (₹ Indian Rupee)</Text>
           </View>
@@ -189,7 +189,7 @@ const ProfileScreen = ({ navigation }) => {
 
         {/* Additional Options */}
         <View style={styles.detailsCard}>
-          <Text style={styles.cardHeader}>Security & Preferences</Text>
+          <Text style={styles.cardHeader}>Security & Notification Controls</Text>
 
           <TouchableOpacity
             style={styles.actionRow}
@@ -197,11 +197,11 @@ const ProfileScreen = ({ navigation }) => {
             activeOpacity={0.7}
           >
             <View style={styles.actionLeft}>
-              <Ionicons name="notifications-outline" size={18} color={colors.primary} />
-              <Text style={styles.actionText}>Personalized Alert Notifications</Text>
+              <Ionicons name="notifications-outline" size={17} color={colors.primary} />
+              <Text style={styles.actionText}>Personalized Alerts</Text>
             </View>
             <View style={styles.statusPill}>
-              <Text style={styles.statusPillText}>Enabled</Text>
+              <Text style={styles.statusPillText}>Active</Text>
             </View>
           </TouchableOpacity>
 
@@ -211,10 +211,10 @@ const ProfileScreen = ({ navigation }) => {
             activeOpacity={0.7}
           >
             <View style={styles.actionLeft}>
-              <Ionicons name="lock-closed-outline" size={18} color={colors.primary} />
-              <Text style={styles.actionText}>Data Privacy & Local Storage</Text>
+              <Ionicons name="lock-closed-outline" size={17} color={colors.primary} />
+              <Text style={styles.actionText}>Encrypted Local Storage</Text>
             </View>
-            <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
+            <Ionicons name="chevron-forward" size={17} color={colors.textMuted} />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -234,76 +234,43 @@ const styles = StyleSheet.create({
   },
   adminBannerCard: {
     flexDirection: 'row',
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.accentLight,
     padding: 14,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: colors.primarySoft,
+    borderColor: colors.accentBorder,
     marginBottom: 14,
     alignItems: 'center',
   },
   adminBannerTitle: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '800',
     color: colors.primaryDark,
   },
   adminBannerDesc: {
-    fontSize: 12,
+    fontSize: 11,
     color: colors.textSecondary,
     marginTop: 2,
-    lineHeight: 16,
-  },
-  restrictedCard: {
-    flexDirection: 'row',
-    backgroundColor: '#FFFBEB',
-    padding: 14,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: '#FDE68A',
-    marginBottom: 14,
-  },
-  restrictedTitle: {
-    fontSize: 13,
-    fontWeight: '800',
-    color: '#92400E',
-  },
-  restrictedDesc: {
-    fontSize: 11,
-    color: '#78350F',
-    marginTop: 2,
-    lineHeight: 16,
-  },
-  switchBtn: {
-    backgroundColor: colors.primary,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    alignSelf: 'flex-start',
-    marginTop: 8,
-  },
-  switchBtnText: {
-    color: '#FFFFFF',
-    fontSize: 11,
-    fontWeight: '700',
+    lineHeight: 15,
   },
   profileCard: {
     backgroundColor: colors.surface,
     borderRadius: 20,
-    padding: 20,
+    padding: 22,
     alignItems: 'center',
     borderWidth: 1,
     borderColor: colors.border,
     marginBottom: 14,
-    elevation: 3,
-    shadowColor: '#000',
+    elevation: 2,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.04,
     shadowRadius: 5,
   },
   avatar: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
+    width: 68,
+    height: 68,
+    borderRadius: 20,
     backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
@@ -311,24 +278,28 @@ const styles = StyleSheet.create({
     elevation: 4,
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.25,
     shadowRadius: 6,
+    borderWidth: 1.5,
+    borderColor: colors.accent,
   },
   avatarText: {
-    fontSize: 26,
+    fontSize: 22,
     fontWeight: '800',
-    color: '#FFFFFF',
+    color: colors.accent,
     letterSpacing: 1,
   },
   userName: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '800',
-    color: colors.text,
+    color: colors.primary,
+    letterSpacing: -0.2,
   },
   userEmail: {
-    fontSize: 13,
+    fontSize: 12,
     color: colors.textSecondary,
     marginTop: 2,
+    fontWeight: '500',
   },
   badgeRow: {
     flexDirection: 'row',
@@ -339,29 +310,33 @@ const styles = StyleSheet.create({
   accountBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.background,
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 8,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   accountBadgeText: {
-    fontSize: 11,
-    fontWeight: '600',
+    fontSize: 10,
+    fontWeight: '700',
     color: colors.primary,
     marginLeft: 4,
   },
   roleBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.incomeLight,
+    backgroundColor: colors.secondaryLight,
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 8,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: colors.secondaryBorder,
   },
   roleBadgeText: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: colors.incomeDark,
+    fontSize: 10,
+    fontWeight: '700',
+    color: colors.secondaryDark,
     marginLeft: 4,
   },
   editButton: {
@@ -370,16 +345,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.primary,
     width: '100%',
-    paddingVertical: 12,
+    paddingVertical: 13,
     borderRadius: 12,
-  },
-  editButtonDisabled: {
-    backgroundColor: colors.textMuted,
+    borderWidth: 1,
+    borderColor: colors.accentDark,
   },
   editButtonText: {
     color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '700',
+    fontSize: 13,
+    fontWeight: '800',
+    letterSpacing: 0.2,
   },
   budgetCard: {
     backgroundColor: colors.surface,
@@ -388,6 +363,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     marginBottom: 14,
+    elevation: 2,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.03,
+    shadowRadius: 3,
   },
   budgetHeader: {
     flexDirection: 'row',
@@ -397,13 +377,15 @@ const styles = StyleSheet.create({
   },
   budgetTitle: {
     fontSize: 14,
-    fontWeight: '700',
-    color: colors.text,
+    fontWeight: '800',
+    color: colors.primary,
+    letterSpacing: -0.2,
   },
   budgetSubtitle: {
     fontSize: 11,
     color: colors.textMuted,
     marginTop: 1,
+    fontWeight: '500',
   },
   budgetAmount: {
     fontSize: 18,
@@ -411,28 +393,29 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   barTrack: {
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: colors.cardAlt,
+    height: 7,
+    borderRadius: 3.5,
+    backgroundColor: colors.background,
     overflow: 'hidden',
     marginBottom: 12,
   },
   barFill: {
     height: '100%',
-    borderRadius: 4,
+    borderRadius: 3.5,
   },
   budgetDetailsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   budgetLabel: {
-    fontSize: 11,
+    fontSize: 10,
     color: colors.textMuted,
-    fontWeight: '500',
+    fontWeight: '600',
+    textTransform: 'uppercase',
   },
   budgetValue: {
     fontSize: 13,
-    fontWeight: '700',
+    fontWeight: '800',
     marginTop: 2,
   },
   detailsCard: {
@@ -442,12 +425,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     marginBottom: 14,
+    elevation: 2,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 3,
   },
   cardHeader: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '800',
-    color: colors.text,
+    color: colors.primary,
     marginBottom: 12,
+    letterSpacing: -0.2,
   },
   detailRow: {
     flexDirection: 'row',
@@ -455,51 +444,53 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    borderBottomColor: colors.borderLight,
   },
   detailLeft: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   detailLabel: {
-    fontSize: 13,
+    fontSize: 12,
     color: colors.textSecondary,
     marginLeft: 8,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   detailValue: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: colors.text,
+    fontSize: 12,
+    fontWeight: '700',
+    color: colors.primary,
   },
   actionRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: 11,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    borderBottomColor: colors.borderLight,
   },
   actionLeft: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   actionText: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: colors.text,
+    fontSize: 12,
+    fontWeight: '700',
+    color: colors.primary,
     marginLeft: 10,
   },
   statusPill: {
-    backgroundColor: colors.incomeLight,
+    backgroundColor: colors.secondaryLight,
     paddingHorizontal: 8,
     paddingVertical: 3,
-    borderRadius: 10,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: colors.secondaryBorder,
   },
   statusPillText: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '700',
-    color: colors.incomeDark,
+    color: colors.secondaryDark,
   },
 });
 

@@ -33,7 +33,7 @@ const MonthTransactionsScreen = ({ navigation }) => {
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <CustomHeader
         title="Monthly Ledger"
-        subtitle="Month-wise Transaction Records"
+        subtitle="Chronological Transaction Audit"
         navigation={navigation}
         onAddPress={() => setModalVisible(true)}
       />
@@ -45,11 +45,11 @@ const MonthTransactionsScreen = ({ navigation }) => {
         {/* Admin Restriction Notice */}
         {isAdmin && (
           <View style={styles.adminBanner}>
-            <Ionicons name="information-circle" size={20} color={colors.primary} />
+            <Ionicons name="shield-checkmark" size={18} color={colors.accentDark} />
             <View style={{ marginLeft: 10, flex: 1 }}>
-              <Text style={styles.adminBannerTitle}>Customer-Only Screen (Admin Preview)</Text>
+              <Text style={styles.adminBannerTitle}>Customer Ledger Audit View</Text>
               <Text style={styles.adminBannerText}>
-                This transaction ledger belongs to customer Priya. Admin has read-only auditing privilege.
+                Displaying customer journal logs in read-only administrative mode.
               </Text>
             </View>
           </View>
@@ -57,7 +57,7 @@ const MonthTransactionsScreen = ({ navigation }) => {
 
         {/* Month Selector Pills */}
         <View style={styles.filterSection}>
-          <Text style={styles.sectionTitle}>Select Month</Text>
+          <Text style={styles.sectionTitle}>SELECT AUDIT CYCLE</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -73,9 +73,9 @@ const MonthTransactionsScreen = ({ navigation }) => {
                   activeOpacity={0.7}
                 >
                   <Ionicons
-                    name="calendar"
-                    size={14}
-                    color={isSelected ? '#FFFFFF' : colors.textSecondary}
+                    name="calendar-outline"
+                    size={13}
+                    color={isSelected ? '#FFFFFF' : colors.textMuted}
                     style={{ marginRight: 6 }}
                   />
                   <Text style={[styles.monthPillText, isSelected && styles.monthPillTextActive]}>
@@ -94,18 +94,19 @@ const MonthTransactionsScreen = ({ navigation }) => {
             amount={monthData.balance}
             type={monthData.balance >= 0 ? 'income' : 'expense'}
             subtitle={`${monthData.count} transactions in selected view`}
+            isFeatured={true}
             style={{ marginBottom: 10 }}
           />
 
           <View style={styles.row}>
             <StatCard
-              title="Month Income"
+              title="Period Inflow"
               amount={monthData.income}
               type="income"
               style={styles.halfWidth}
             />
             <StatCard
-              title="Month Expenses"
+              title="Period Outflow"
               amount={monthData.expense}
               type="expense"
               style={styles.halfWidth}
@@ -131,13 +132,13 @@ const MonthTransactionsScreen = ({ navigation }) => {
             activeOpacity={0.7}
           >
             <Ionicons
-              name="arrow-up-circle"
-              size={14}
+              name="arrow-up"
+              size={13}
               color={typeFilter === 'expense' ? '#FFFFFF' : colors.expense}
               style={{ marginRight: 4 }}
             />
             <Text style={[styles.typeBtnText, typeFilter === 'expense' && styles.typeBtnTextActive]}>
-              Expenses
+              Outflows
             </Text>
           </TouchableOpacity>
 
@@ -147,13 +148,13 @@ const MonthTransactionsScreen = ({ navigation }) => {
             activeOpacity={0.7}
           >
             <Ionicons
-              name="arrow-down-circle"
-              size={14}
-              color={typeFilter === 'income' ? '#FFFFFF' : colors.incomeDark}
+              name="arrow-down"
+              size={13}
+              color={typeFilter === 'income' ? '#FFFFFF' : colors.income}
               style={{ marginRight: 4 }}
             />
             <Text style={[styles.typeBtnText, typeFilter === 'income' && styles.typeBtnTextActive]}>
-              Income
+              Inflows
             </Text>
           </TouchableOpacity>
         </View>
@@ -169,15 +170,15 @@ const MonthTransactionsScreen = ({ navigation }) => {
               onPress={() => setModalVisible(true)}
               activeOpacity={0.8}
             >
-              <Ionicons name="add" size={14} color="#FFFFFF" />
-              <Text style={styles.addBtnSmallText}>New Transaction</Text>
+              <Ionicons name="add" size={13} color="#FFFFFF" />
+              <Text style={styles.addBtnSmallText}>New Entry</Text>
             </TouchableOpacity>
           </View>
 
           {monthData.transactions.length === 0 ? (
             <View style={styles.emptyCard}>
-              <Ionicons name="folder-open-outline" size={40} color={colors.textMuted} />
-              <Text style={styles.emptyTitle}>No Transactions Found</Text>
+              <Ionicons name="folder-open-outline" size={38} color={colors.textMuted} />
+              <Text style={styles.emptyTitle}>No Journal Entries</Text>
               <Text style={styles.emptyDesc}>
                 No {typeFilter !== 'all' ? typeFilter : ''} records for {selectedMonth}.
               </Text>
@@ -212,16 +213,16 @@ const styles = StyleSheet.create({
   adminBanner: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.accentLight,
     padding: 12,
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: colors.primarySoft,
+    borderColor: colors.accentBorder,
     marginBottom: 12,
   },
   adminBannerTitle: {
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: '800',
     color: colors.primaryDark,
   },
   adminBannerText: {
@@ -233,9 +234,10 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   sectionTitle: {
-    fontSize: 14,
+    fontSize: 10,
     fontWeight: '800',
-    color: colors.text,
+    color: colors.textMuted,
+    letterSpacing: 0.8,
     marginBottom: 8,
   },
   monthPills: {
@@ -246,7 +248,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 14,
-    paddingVertical: 8,
+    paddingVertical: 7,
     borderRadius: 20,
     backgroundColor: colors.surface,
     borderWidth: 1,
@@ -254,7 +256,7 @@ const styles = StyleSheet.create({
   },
   monthPillActive: {
     backgroundColor: colors.primary,
-    borderColor: colors.primary,
+    borderColor: colors.primaryDark,
   },
   monthPillText: {
     fontSize: 12,
@@ -277,7 +279,7 @@ const styles = StyleSheet.create({
   },
   typeSwitcher: {
     flexDirection: 'row',
-    backgroundColor: colors.surface,
+    backgroundColor: colors.cardAlt,
     borderRadius: 12,
     padding: 4,
     borderWidth: 1,
@@ -289,26 +291,33 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 9,
+    paddingVertical: 8,
     borderRadius: 9,
   },
   typeBtnActive: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.surface,
+    elevation: 2,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   typeBtnActiveExpense: {
     backgroundColor: colors.expense,
   },
   typeBtnActiveIncome: {
-    backgroundColor: colors.incomeDark,
+    backgroundColor: colors.income,
   },
   typeBtnText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: colors.textSecondary,
+    fontSize: 11,
+    fontWeight: '700',
+    color: colors.textMuted,
   },
   typeBtnTextActive: {
-    color: '#FFFFFF',
-    fontWeight: '700',
+    color: colors.primary,
+    fontWeight: '800',
   },
   listSection: {
     marginTop: 2,
@@ -320,23 +329,27 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   listHeaderTitle: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '800',
-    color: colors.text,
+    color: colors.primary,
+    letterSpacing: -0.2,
   },
   addBtnSmall: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.primary,
     paddingHorizontal: 10,
-    paddingVertical: 6,
+    paddingVertical: 5,
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.accentDark,
   },
   addBtnSmallText: {
     color: '#FFFFFF',
-    fontSize: 11,
-    fontWeight: '700',
+    fontSize: 10,
+    fontWeight: '800',
     marginLeft: 4,
+    letterSpacing: 0.2,
   },
   emptyCard: {
     backgroundColor: colors.surface,
@@ -349,7 +362,7 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: colors.text,
+    color: colors.primary,
     marginTop: 8,
   },
   emptyDesc: {

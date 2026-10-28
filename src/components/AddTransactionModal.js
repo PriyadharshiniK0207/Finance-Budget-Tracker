@@ -59,7 +59,6 @@ const AddTransactionModal = ({ visible, onClose }) => {
       return;
     }
 
-    // Call addTransaction which triggers Requirement 11 Personalized Alert!
     addTransaction({
       title,
       amount: parseFloat(amount),
@@ -89,15 +88,15 @@ const AddTransactionModal = ({ visible, onClose }) => {
           {/* Header */}
           <View style={styles.header}>
             <View>
-              <Text style={styles.headerTitle}>Add Transaction</Text>
-              <Text style={styles.headerSubtitle}>Record new income or expense</Text>
+              <Text style={styles.headerTitle}>Record Transaction</Text>
+              <Text style={styles.headerSubtitle}>Modern Wealth Studio Journal</Text>
             </View>
             <TouchableOpacity
               style={styles.closeBtn}
               onPress={handleClose}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             >
-              <Ionicons name="close" size={22} color={colors.textSecondary} />
+              <Ionicons name="close" size={20} color={colors.primary} />
             </TouchableOpacity>
           </View>
 
@@ -105,7 +104,7 @@ const AddTransactionModal = ({ visible, onClose }) => {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollBody}
           >
-            {/* Type Switcher: Income / Expense */}
+            {/* Type Switcher: Expense / Income */}
             <View style={styles.typeSwitcher}>
               <TouchableOpacity
                 style={[
@@ -116,8 +115,8 @@ const AddTransactionModal = ({ visible, onClose }) => {
                 activeOpacity={0.8}
               >
                 <Ionicons
-                  name="arrow-up-circle"
-                  size={18}
+                  name="arrow-up"
+                  size={16}
                   color={type === 'expense' ? '#FFFFFF' : colors.expense}
                 />
                 <Text
@@ -126,7 +125,7 @@ const AddTransactionModal = ({ visible, onClose }) => {
                     type === 'expense' && styles.typeBtnTextActive,
                   ]}
                 >
-                  Expense
+                  Expense Outflow
                 </Text>
               </TouchableOpacity>
 
@@ -139,8 +138,8 @@ const AddTransactionModal = ({ visible, onClose }) => {
                 activeOpacity={0.8}
               >
                 <Ionicons
-                  name="arrow-down-circle"
-                  size={18}
+                  name="arrow-down"
+                  size={16}
                   color={type === 'income' ? '#FFFFFF' : colors.income}
                 />
                 <Text
@@ -149,17 +148,17 @@ const AddTransactionModal = ({ visible, onClose }) => {
                     type === 'income' && styles.typeBtnTextActive,
                   ]}
                 >
-                  Income
+                  Income Inflow
                 </Text>
               </TouchableOpacity>
             </View>
 
             {/* Title Input */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Title / Description *</Text>
+              <Text style={styles.label}>Transaction Description *</Text>
               <TextInput
                 style={[styles.input, errors.title && styles.inputError]}
-                placeholder="e.g. Grocery restock, Client payment"
+                placeholder="e.g. Fine dining, Equity dividend, Utilities"
                 placeholderTextColor={colors.textMuted}
                 value={title}
                 onChangeText={(text) => {
@@ -175,7 +174,7 @@ const AddTransactionModal = ({ visible, onClose }) => {
               <Text style={styles.label}>Amount (₹) *</Text>
               <TextInput
                 style={[styles.input, errors.amount && styles.inputError]}
-                placeholder="e.g. 1250"
+                placeholder="e.g. 2500"
                 placeholderTextColor={colors.textMuted}
                 keyboardType="numeric"
                 value={amount}
@@ -189,7 +188,7 @@ const AddTransactionModal = ({ visible, onClose }) => {
 
             {/* Category Selector Chips */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Select Category *</Text>
+              <Text style={styles.label}>Spending Category *</Text>
               <View style={styles.chipsWrap}>
                 {categories.map((cat) => {
                   const isSelected = selectedCategory === cat.name;
@@ -208,9 +207,9 @@ const AddTransactionModal = ({ visible, onClose }) => {
                     >
                       <Ionicons
                         name={cat.icon}
-                        size={14}
+                        size={13}
                         color={isSelected ? '#FFFFFF' : cat.color}
-                        style={{ marginRight: 4 }}
+                        style={{ marginRight: 5 }}
                       />
                       <Text
                         style={[
@@ -228,7 +227,7 @@ const AddTransactionModal = ({ visible, onClose }) => {
 
             {/* Payment Method Selector */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Payment Method</Text>
+              <Text style={styles.label}>Payment Channel</Text>
               <View style={styles.chipsWrap}>
                 {PAYMENT_METHODS.map((pm) => {
                   const isSelected = paymentMethod === pm;
@@ -258,10 +257,10 @@ const AddTransactionModal = ({ visible, onClose }) => {
 
             {/* Notes / Remarks */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Notes / Remarks (Optional)</Text>
+              <Text style={styles.label}>Journal Notes (Optional)</Text>
               <TextInput
                 style={[styles.input, styles.textArea]}
-                placeholder="Add additional remarks"
+                placeholder="Additional audit details or invoice reference"
                 placeholderTextColor={colors.textMuted}
                 value={notes}
                 onChangeText={setNotes}
@@ -276,8 +275,8 @@ const AddTransactionModal = ({ visible, onClose }) => {
               onPress={handleSubmit}
               activeOpacity={0.8}
             >
-              <Ionicons name="checkmark-circle" size={20} color="#FFFFFF" style={{ marginRight: 8 }} />
-              <Text style={styles.submitBtnText}>Save Transaction</Text>
+              <Ionicons name="checkmark-circle" size={18} color={colors.accent} style={{ marginRight: 8 }} />
+              <Text style={styles.submitBtnText}>Post to Wealth Ledger</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
@@ -289,7 +288,7 @@ const AddTransactionModal = ({ visible, onClose }) => {
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(15, 23, 42, 0.6)',
+    backgroundColor: 'rgba(23, 35, 63, 0.65)',
     justifyContent: 'flex-end',
   },
   modalContent: {
@@ -298,6 +297,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 24,
     maxHeight: '90%',
     paddingBottom: Platform.OS === 'ios' ? 34 : 20,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
   },
   header: {
     flexDirection: 'row',
@@ -307,25 +308,30 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 14,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    borderBottomColor: colors.borderLight,
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: '800',
-    color: colors.text,
+    color: colors.primary,
+    letterSpacing: -0.3,
   },
   headerSubtitle: {
-    fontSize: 12,
-    color: colors.textSecondary,
+    fontSize: 11,
+    color: colors.textMuted,
+    fontWeight: '600',
     marginTop: 2,
+    letterSpacing: 0.2,
   },
   closeBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: colors.cardAlt,
+    width: 34,
+    height: 34,
+    borderRadius: 10,
+    backgroundColor: colors.background,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   scrollBody: {
     paddingHorizontal: 20,
@@ -334,10 +340,12 @@ const styles = StyleSheet.create({
   },
   typeSwitcher: {
     flexDirection: 'row',
-    backgroundColor: colors.cardAlt,
+    backgroundColor: colors.background,
     borderRadius: 12,
     padding: 4,
     marginBottom: 16,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   typeBtn: {
     flex: 1,
@@ -345,16 +353,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 10,
-    borderRadius: 10,
+    borderRadius: 9,
   },
   typeBtnExpenseActive: {
     backgroundColor: colors.expense,
   },
   typeBtnIncomeActive: {
-    backgroundColor: colors.incomeDark,
+    backgroundColor: colors.income,
   },
   typeBtnText: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '700',
     color: colors.textSecondary,
     marginLeft: 6,
@@ -363,23 +371,24 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   inputGroup: {
-    marginBottom: 16,
+    marginBottom: 15,
   },
   label: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '700',
-    color: colors.text,
+    color: colors.primary,
     marginBottom: 6,
+    letterSpacing: 0.1,
   },
   input: {
-    backgroundColor: colors.cardAlt,
+    backgroundColor: colors.background,
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: 12,
     paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingVertical: 11,
     fontSize: 14,
-    color: colors.text,
+    color: colors.primary,
   },
   textArea: {
     height: 60,
@@ -403,10 +412,10 @@ const styles = StyleSheet.create({
   chip: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 12,
+    paddingHorizontal: 11,
     paddingVertical: 7,
-    borderRadius: 20,
-    backgroundColor: colors.cardAlt,
+    borderRadius: 10,
+    backgroundColor: colors.background,
     borderWidth: 1,
     borderColor: colors.border,
   },
@@ -415,7 +424,7 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
   },
   chipText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '600',
     color: colors.textSecondary,
   },
@@ -434,13 +443,16 @@ const styles = StyleSheet.create({
     elevation: 3,
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.25,
     shadowRadius: 5,
+    borderWidth: 1,
+    borderColor: colors.accentDark,
   },
   submitBtnText: {
     color: '#FFFFFF',
-    fontSize: 15,
-    fontWeight: '700',
+    fontSize: 14,
+    fontWeight: '800',
+    letterSpacing: 0.3,
   },
 });
 

@@ -25,22 +25,31 @@ const TabNavigator = () => {
         tabBarInactiveTintColor: colors.textMuted,
         tabBarStyle: styles.tabBar,
         tabBarLabelStyle: styles.tabBarLabel,
+        tabBarItemStyle: styles.tabBarItem,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
           if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
+            iconName = focused ? 'compass' : 'compass-outline';
           } else if (route.name === 'Analysis') {
-            iconName = focused ? 'pie-chart' : 'pie-chart-outline';
+            iconName = focused ? 'analytics' : 'analytics-outline';
           } else if (route.name === 'Transactions') {
             iconName = focused ? 'receipt' : 'receipt-outline';
           } else if (route.name === 'Categories') {
-            iconName = focused ? 'grid' : 'grid-outline';
+            iconName = focused ? 'albums' : 'albums-outline';
           } else if (route.name === 'Profile') {
-            iconName = focused ? 'person' : 'person-outline';
+            iconName = focused ? 'person-circle' : 'person-circle-outline';
           }
 
-          return <Ionicons name={iconName} size={22} color={color} />;
+          return (
+            <View style={[styles.iconWrapper, focused && styles.iconWrapperActive]}>
+              <Ionicons
+                name={iconName}
+                size={focused ? 21 : 20}
+                color={focused ? colors.primary : colors.textMuted}
+              />
+            </View>
+          );
         },
       })}
     >
@@ -49,7 +58,7 @@ const TabNavigator = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Studio',
         }}
       />
 
@@ -67,7 +76,7 @@ const TabNavigator = () => {
         name="Transactions"
         component={MonthTransactionsScreen}
         options={{
-          tabBarLabel: 'Transactions',
+          tabBarLabel: 'Ledger',
         }}
       />
 
@@ -85,7 +94,7 @@ const TabNavigator = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarLabel: isAdmin ? 'Settings' : 'Profile',
+          tabBarLabel: isAdmin ? 'Admin' : 'Profile',
         }}
       />
     </Tab.Navigator>
@@ -99,17 +108,28 @@ const styles = StyleSheet.create({
     borderTopColor: colors.border,
     height: Platform.OS === 'ios' ? 84 : 64,
     paddingTop: 6,
-    paddingBottom: Platform.OS === 'ios' ? 26 : 8,
+    paddingBottom: Platform.OS === 'ios' ? 24 : 8,
     elevation: 8,
-    shadowColor: '#000',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.04,
     shadowRadius: 4,
+  },
+  tabBarItem: {
+    paddingVertical: 2,
+  },
+  iconWrapper: {
+    padding: 3,
+    borderRadius: 8,
+  },
+  iconWrapperActive: {
+    backgroundColor: colors.primaryLight,
   },
   tabBarLabel: {
     fontSize: 10,
-    fontWeight: '700',
+    fontWeight: '800',
     marginTop: 2,
+    letterSpacing: 0.2,
   },
 });
 

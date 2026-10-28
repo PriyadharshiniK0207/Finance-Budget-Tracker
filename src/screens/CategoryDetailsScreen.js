@@ -25,8 +25,8 @@ const CategoryDetailsScreen = ({ route, navigation }) => {
     id: categoryId,
     name: categoryName,
     icon: 'restaurant',
-    color: colors.primary,
-    bgColor: colors.primaryLight,
+    color: colors.catFood,
+    bgColor: colors.catFoodBg,
     budget: 15000,
     totalSpent: 0,
     remainingBudget: 15000,
@@ -57,13 +57,13 @@ const CategoryDetailsScreen = ({ route, navigation }) => {
           onPress={() => navigation.goBack()}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
-          <Ionicons name="arrow-back" size={22} color={colors.text} />
+          <Ionicons name="arrow-back" size={20} color={colors.primary} />
         </TouchableOpacity>
         <View style={styles.headerTitleWrap}>
           <Text style={styles.headerTitle} numberOfLines={1}>
             {currentCat.name}
           </Text>
-          <Text style={styles.headerSubtitle}>Category Detailed Breakdown</Text>
+          <Text style={styles.headerSubtitle}>Department Breakdown & History</Text>
         </View>
 
         <TouchableOpacity
@@ -71,7 +71,7 @@ const CategoryDetailsScreen = ({ route, navigation }) => {
           onPress={() => setModalVisible(true)}
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
-          <Ionicons name="add" size={20} color="#FFFFFF" />
+          <Ionicons name="add" size={18} color="#FFFFFF" />
         </TouchableOpacity>
       </View>
 
@@ -82,11 +82,11 @@ const CategoryDetailsScreen = ({ route, navigation }) => {
         {/* Category Hero Banner */}
         <View style={styles.heroCard}>
           <View style={[styles.heroIconBox, { backgroundColor: currentCat.bgColor }]}>
-            <Ionicons name={currentCat.icon} size={32} color={currentCat.color} />
+            <Ionicons name={currentCat.icon} size={28} color={currentCat.color} />
           </View>
 
           <Text style={styles.heroCategoryName}>{currentCat.name}</Text>
-          <Text style={styles.heroSubtitle}>Total Spent This Period</Text>
+          <Text style={styles.heroSubtitle}>Total Disbursed This Cycle</Text>
           <Text style={[styles.heroSpentAmount, { color: currentCat.color }]}>
             ₹{totalSpent.toLocaleString('en-IN')}
           </Text>
@@ -106,16 +106,16 @@ const CategoryDetailsScreen = ({ route, navigation }) => {
 
           <View style={styles.heroStatsRow}>
             <View style={styles.statCol}>
-              <Text style={styles.statLabel}>Allocated Budget</Text>
+              <Text style={styles.statLabel}>Allocated Ceiling</Text>
               <Text style={styles.statVal}>₹{budget.toLocaleString('en-IN')}</Text>
             </View>
             <View style={[styles.statCol, { alignItems: 'center' }]}>
-              <Text style={styles.statLabel}>Budget Used</Text>
+              <Text style={styles.statLabel}>Ceiling Consumed</Text>
               <Text style={styles.statVal}>{spentPercent}%</Text>
             </View>
             <View style={[styles.statCol, { alignItems: 'flex-end' }]}>
-              <Text style={styles.statLabel}>Remaining</Text>
-              <Text style={[styles.statVal, { color: colors.incomeDark }]}>
+              <Text style={styles.statLabel}>Available Reserve</Text>
+              <Text style={[styles.statVal, { color: colors.income }]}>
                 ₹{remaining.toLocaleString('en-IN')}
               </Text>
             </View>
@@ -126,24 +126,24 @@ const CategoryDetailsScreen = ({ route, navigation }) => {
         <View style={styles.listSection}>
           <View style={styles.listHeaderRow}>
             <Text style={styles.listTitle}>
-              Category Transactions ({catTransactions.length})
+              Journal Records ({catTransactions.length})
             </Text>
             <TouchableOpacity
               style={styles.addTxButton}
               onPress={() => setModalVisible(true)}
               activeOpacity={0.8}
             >
-              <Ionicons name="add" size={14} color="#FFFFFF" />
-              <Text style={styles.addTxButtonText}>Add in {currentCat.name.split(' ')[0]}</Text>
+              <Ionicons name="add" size={13} color="#FFFFFF" />
+              <Text style={styles.addTxButtonText}>Post in {currentCat.name.split(' ')[0]}</Text>
             </TouchableOpacity>
           </View>
 
           {catTransactions.length === 0 ? (
             <View style={styles.emptyCard}>
-              <Ionicons name="receipt-outline" size={40} color={colors.textMuted} />
-              <Text style={styles.emptyTitle}>No Transactions In This Category</Text>
+              <Ionicons name="receipt-outline" size={36} color={colors.textMuted} />
+              <Text style={styles.emptyTitle}>No Entries Recorded</Text>
               <Text style={styles.emptyDesc}>
-                Tap the "+ Add" button above to record your first expense in {currentCat.name}.
+                Tap "+ Post" above to record your first entry in {currentCat.name}.
               </Text>
             </View>
           ) : (
@@ -175,34 +175,38 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    borderBottomColor: colors.borderLight,
   },
   backBtn: {
-    width: 40,
-    height: 40,
+    width: 38,
+    height: 38,
     borderRadius: 10,
-    backgroundColor: colors.cardAlt,
+    backgroundColor: colors.background,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   headerTitleWrap: {
     flex: 1,
   },
   headerTitle: {
-    fontSize: 17,
-    fontWeight: '700',
-    color: colors.text,
+    fontSize: 16,
+    fontWeight: '800',
+    color: colors.primary,
+    letterSpacing: -0.2,
   },
   headerSubtitle: {
     fontSize: 11,
     color: colors.textMuted,
+    fontWeight: '500',
   },
   addBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: colors.primary,
+    width: 34,
+    height: 34,
+    borderRadius: 10,
+    backgroundColor: colors.secondary,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -214,74 +218,81 @@ const styles = StyleSheet.create({
   heroCard: {
     backgroundColor: colors.surface,
     borderRadius: 20,
-    padding: 20,
+    padding: 22,
     alignItems: 'center',
     borderWidth: 1,
     borderColor: colors.border,
     marginBottom: 16,
     elevation: 3,
-    shadowColor: '#000',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.04,
     shadowRadius: 5,
   },
   heroIconBox: {
-    width: 64,
-    height: 64,
-    borderRadius: 20,
+    width: 58,
+    height: 58,
+    borderRadius: 18,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 10,
   },
   heroCategoryName: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '800',
-    color: colors.text,
+    color: colors.primary,
+    letterSpacing: -0.2,
   },
   heroSubtitle: {
-    fontSize: 12,
+    fontSize: 11,
     color: colors.textMuted,
     marginTop: 2,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   heroSpentAmount: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: '800',
     letterSpacing: -0.5,
     marginVertical: 6,
   },
   trackWrap: {
     width: '100%',
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: colors.cardAlt,
+    height: 7,
+    borderRadius: 3.5,
+    backgroundColor: colors.background,
     overflow: 'hidden',
     marginVertical: 12,
   },
   fillBar: {
     height: '100%',
-    borderRadius: 4,
+    borderRadius: 3.5,
   },
   heroStatsRow: {
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
-    backgroundColor: colors.cardAlt,
+    backgroundColor: colors.background,
     padding: 12,
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
   },
   statCol: {
     flex: 1,
   },
   statLabel: {
-    fontSize: 10,
+    fontSize: 9,
     color: colors.textMuted,
-    fontWeight: '600',
+    fontWeight: '700',
     textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   statVal: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: colors.text,
+    fontSize: 12,
+    fontWeight: '800',
+    color: colors.primary,
     marginTop: 2,
   },
   listSection: {
@@ -294,9 +305,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   listTitle: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '800',
-    color: colors.text,
+    color: colors.primary,
+    letterSpacing: -0.2,
   },
   addTxButton: {
     flexDirection: 'row',
@@ -305,11 +317,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.accentDark,
   },
   addTxButtonText: {
     color: '#FFFFFF',
-    fontSize: 11,
-    fontWeight: '700',
+    fontSize: 10,
+    fontWeight: '800',
     marginLeft: 4,
   },
   emptyCard: {
@@ -323,7 +337,7 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: colors.text,
+    color: colors.primary,
     marginTop: 8,
   },
   emptyDesc: {

@@ -4,27 +4,27 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 import { useFinance } from '../context/FinanceContext';
 
-const getCategoryIcon = (category) => {
+const getCategoryMeta = (category) => {
   const cat = (category || '').toLowerCase();
-  if (cat.includes('food') || cat.includes('dining')) return { name: 'restaurant', color: '#F59E0B', bg: '#FEF3C7' };
-  if (cat.includes('travel') || cat.includes('transport')) return { name: 'car-sport', color: '#3B82F6', bg: '#DBEAFE' };
-  if (cat.includes('shopping') || cat.includes('retail')) return { name: 'bag-handle', color: '#EC4899', bg: '#FCE7F3' };
-  if (cat.includes('bills') || cat.includes('util')) return { name: 'flash', color: '#8B5CF6', bg: '#EDE9FE' };
-  if (cat.includes('health') || cat.includes('medical')) return { name: 'medkit', color: '#EF4444', bg: '#FEE2E2' };
-  if (cat.includes('entertain')) return { name: 'film', color: '#10B981', bg: '#D1FAE5' };
-  if (cat.includes('edu')) return { name: 'book', color: '#6366F1', bg: '#EEF2FF' };
-  return { name: 'trending-up', color: '#0D9488', bg: '#CCFBF1' };
+  if (cat.includes('food') || cat.includes('dining')) return { name: 'restaurant', color: colors.catFood, bg: colors.catFoodBg };
+  if (cat.includes('travel') || cat.includes('transport')) return { name: 'car-sport', color: colors.catTravel, bg: colors.catTravelBg };
+  if (cat.includes('shopping') || cat.includes('retail')) return { name: 'bag-handle', color: colors.catShopping, bg: colors.catShoppingBg };
+  if (cat.includes('bills') || cat.includes('util')) return { name: 'flash', color: colors.catBills, bg: colors.catBillsBg };
+  if (cat.includes('health') || cat.includes('medical')) return { name: 'medkit', color: colors.catHealth, bg: colors.catHealthBg };
+  if (cat.includes('entertain')) return { name: 'film', color: colors.catEntertainment, bg: colors.catEntertainmentBg };
+  if (cat.includes('edu')) return { name: 'book', color: colors.catEducation, bg: colors.catEducationBg };
+  return { name: 'trending-up', color: colors.catInvestment, bg: colors.catInvestmentBg };
 };
 
 const TransactionItem = ({ transaction, onPress = null, showDelete = true }) => {
   const { deleteTransaction } = useFinance();
   const isIncome = transaction.type === 'income';
-  const iconMeta = getCategoryIcon(transaction.category);
+  const meta = getCategoryMeta(transaction.category);
   const formattedAmount = Number(transaction.amount || 0).toLocaleString('en-IN');
 
   const handleDelete = () => {
     Alert.alert(
-      'Delete Transaction',
+      'Remove Transaction Record',
       `Are you sure you want to delete "${transaction.title}" (₹${formattedAmount})?`,
       [
         { text: 'Cancel', style: 'cancel' },
@@ -43,8 +43,8 @@ const TransactionItem = ({ transaction, onPress = null, showDelete = true }) => 
       onPress={onPress}
       activeOpacity={onPress ? 0.7 : 1}
     >
-      <View style={[styles.iconBox, { backgroundColor: iconMeta.bg }]}>
-        <Ionicons name={iconMeta.name} size={20} color={iconMeta.color} />
+      <View style={[styles.iconBox, { backgroundColor: meta.bg }]}>
+        <Ionicons name={meta.name} size={18} color={meta.color} />
       </View>
 
       <View style={styles.content}>
@@ -52,13 +52,17 @@ const TransactionItem = ({ transaction, onPress = null, showDelete = true }) => 
           {transaction.title}
         </Text>
         <View style={styles.metaRow}>
-          <Text style={styles.categoryBadge}>{transaction.category}</Text>
+          <Text style={[styles.categoryBadge, { color: meta.color }]}>
+            {transaction.category}
+          </Text>
           <Text style={styles.dot}>•</Text>
           <Text style={styles.date}>{transaction.date}</Text>
           {transaction.paymentMethod ? (
             <>
               <Text style={styles.dot}>•</Text>
-              <Text style={styles.paymentMethod}>{transaction.paymentMethod}</Text>
+              <View style={styles.paymentPill}>
+                <Text style={styles.paymentText}>{transaction.paymentMethod}</Text>
+              </View>
             </>
           ) : null}
         </View>
@@ -80,7 +84,7 @@ const TransactionItem = ({ transaction, onPress = null, showDelete = true }) => 
             onPress={handleDelete}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           >
-            <Ionicons name="trash-outline" size={14} color={colors.textMuted} />
+            <Ionicons name="trash-outline" size={13} color={colors.textMuted} />
           </TouchableOpacity>
         )}
       </View>
@@ -93,17 +97,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.surface,
-    paddingVertical: 12,
+    paddingVertical: 13,
     paddingHorizontal: 14,
     borderRadius: 14,
     marginBottom: 8,
     borderWidth: 1,
     borderColor: colors.border,
+    elevation: 1,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 2,
   },
   iconBox: {
-    width: 42,
-    height: 42,
-    borderRadius: 12,
+    width: 38,
+    height: 38,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
@@ -115,19 +124,18 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: '700',
-    color: colors.text,
+    color: colors.primary,
     letterSpacing: -0.2,
   },
   metaRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 3,
+    marginTop: 4,
     flexWrap: 'wrap',
   },
   categoryBadge: {
     fontSize: 11,
-    color: colors.textSecondary,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   dot: {
     fontSize: 10,
@@ -137,15 +145,19 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 11,
     color: colors.textMuted,
+    fontWeight: '500',
   },
-  paymentMethod: {
-    fontSize: 10,
-    color: colors.primaryDark,
+  paymentPill: {
     backgroundColor: colors.primaryLight,
-    paddingHorizontal: 4,
+    paddingHorizontal: 6,
     paddingVertical: 1,
-    borderRadius: 4,
-    fontWeight: '600',
+    borderRadius: 6,
+  },
+  paymentText: {
+    fontSize: 9,
+    color: colors.primary,
+    fontWeight: '700',
+    letterSpacing: 0.2,
   },
   amountContainer: {
     alignItems: 'flex-end',
@@ -157,7 +169,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.3,
   },
   incomeText: {
-    color: colors.incomeDark,
+    color: colors.income,
   },
   expenseText: {
     color: colors.expense,

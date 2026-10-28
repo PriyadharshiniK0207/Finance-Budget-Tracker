@@ -8,7 +8,6 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -39,6 +38,26 @@ const SignInScreen = ({ navigation }) => {
     });
   };
 
+  // Quick Demo Autofill for Exam Evaluators (Refined & Integrated)
+  const handleAutofillDemo = (demoRole) => {
+    if (demoRole === 'admin') {
+      setEmail('admin@financetracker.com');
+      setPassword('admin123');
+      setRole('admin');
+      login('admin@financetracker.com', 'admin123', 'admin');
+    } else {
+      setEmail('priya@example.com');
+      setPassword('password123');
+      setRole('customer');
+      login('priya@example.com', 'password123', 'customer');
+    }
+
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'DrawerRoot' }],
+    });
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
@@ -49,22 +68,31 @@ const SignInScreen = ({ navigation }) => {
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          {/* Brand Header */}
+          {/* Distinctive Wealth Studio Brand Emblem */}
           <View style={styles.brandContainer}>
-            <View style={styles.logoBadge}>
-              <Ionicons name="wallet" size={32} color="#FFFFFF" />
+            <View style={styles.emblemWrapper}>
+              <View style={styles.emblemOuter}>
+                <Ionicons name="sparkles" size={24} color={colors.accent} />
+              </View>
             </View>
+            <Text style={styles.studioPreTitle}>MODERN WEALTH STUDIO</Text>
             <Text style={styles.brandTitle}>Finance & Budget</Text>
-            <Text style={styles.brandSubtitle}>Personal Wealth & Expense Tracker</Text>
+            <Text style={styles.brandSubtitle}>
+              Private Wealth Management & Institutional Budgeting
+            </Text>
           </View>
 
-          {/* Form Card */}
+          {/* Luxury Main Sign In Card */}
           <View style={styles.card}>
-            <Text style={styles.formTitle}>Welcome Back</Text>
-            <Text style={styles.formSubtitle}>Sign in to manage your budget and finances</Text>
+            <View style={styles.cardHeaderWrap}>
+              <Text style={styles.formTitle}>Portfolio Sign In</Text>
+              <Text style={styles.formSubtitle}>
+                Access your personalized ledger and wealth analytics
+              </Text>
+            </View>
 
-            {/* Role Selection */}
-            <Text style={styles.inputLabel}>Select Your Role</Text>
+            {/* Role Selection Switcher */}
+            <Text style={styles.inputLabel}>SELECT ACCOUNT PRIVILEGE</Text>
             <View style={styles.roleContainer}>
               <TouchableOpacity
                 style={[
@@ -76,7 +104,7 @@ const SignInScreen = ({ navigation }) => {
               >
                 <Ionicons
                   name="person"
-                  size={16}
+                  size={15}
                   color={role === 'customer' ? '#FFFFFF' : colors.textSecondary}
                   style={{ marginRight: 6 }}
                 />
@@ -100,7 +128,7 @@ const SignInScreen = ({ navigation }) => {
               >
                 <Ionicons
                   name="shield-checkmark"
-                  size={16}
+                  size={15}
                   color={role === 'admin' ? '#FFFFFF' : colors.textSecondary}
                   style={{ marginRight: 6 }}
                 />
@@ -110,19 +138,19 @@ const SignInScreen = ({ navigation }) => {
                     role === 'admin' && styles.roleButtonTextActive,
                   ]}
                 >
-                  Admin
+                  Administrator
                 </Text>
               </TouchableOpacity>
             </View>
 
             {/* Email Field */}
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Email Address</Text>
+              <Text style={styles.inputLabel}>EMAIL ADDRESS</Text>
               <View style={[styles.inputWrapper, errors.email && styles.inputWrapperError]}>
-                <Ionicons name="mail-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
+                <Ionicons name="mail-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="e.g. priya@example.com"
+                  placeholder="e.g. priya@example.com or vikram@gmail.com"
                   placeholderTextColor={colors.textMuted}
                   value={email}
                   onChangeText={(text) => {
@@ -138,12 +166,12 @@ const SignInScreen = ({ navigation }) => {
 
             {/* Password Field */}
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Password</Text>
+              <Text style={styles.inputLabel}>CONFIDENTIAL PASSWORD</Text>
               <View style={[styles.inputWrapper, errors.password && styles.inputWrapperError]}>
-                <Ionicons name="lock-closed-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
+                <Ionicons name="lock-closed-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="Enter your password"
+                  placeholder="Enter your security password"
                   placeholderTextColor={colors.textMuted}
                   value={password}
                   onChangeText={(text) => {
@@ -159,7 +187,7 @@ const SignInScreen = ({ navigation }) => {
                 >
                   <Ionicons
                     name={showPassword ? 'eye-off-outline' : 'eye-outline'}
-                    size={20}
+                    size={19}
                     color={colors.textMuted}
                   />
                 </TouchableOpacity>
@@ -167,21 +195,52 @@ const SignInScreen = ({ navigation }) => {
               {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
             </View>
 
-            {/* Sign In Submit Button */}
+            {/* Sign In Primary Button */}
             <TouchableOpacity
               style={styles.primaryButton}
               onPress={handleSignIn}
               activeOpacity={0.8}
             >
-              <Text style={styles.primaryButtonText}>Sign In</Text>
-              <Ionicons name="arrow-forward" size={18} color="#FFFFFF" style={{ marginLeft: 6 }} />
+              <Text style={styles.primaryButtonText}>Authenticate & Enter</Text>
+              <Ionicons name="arrow-forward" size={16} color={colors.accent} style={{ marginLeft: 6 }} />
             </TouchableOpacity>
 
             {/* Switch to Sign Up */}
             <View style={styles.switchRow}>
-              <Text style={styles.switchText}>Don't have an account? </Text>
+              <Text style={styles.switchText}>New to Wealth Studio? </Text>
               <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                <Text style={styles.switchLink}>Sign Up</Text>
+                <Text style={styles.switchLink}>Open An Account</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Refined Evaluator Quick-Access Footer (Clean & Discreet) */}
+          <View style={styles.evaluatorCard}>
+            <View style={styles.evaluatorHeader}>
+              <Ionicons name="key-outline" size={14} color={colors.accentDark} />
+              <Text style={styles.evaluatorTitle}>EXAM EVALUATOR SHORTCUTS</Text>
+            </View>
+            <View style={styles.evaluatorButtonsRow}>
+              <TouchableOpacity
+                style={styles.evaluatorBtn}
+                onPress={() => handleAutofillDemo('customer')}
+                activeOpacity={0.7}
+              >
+                <Ionicons name="person-circle-outline" size={13} color={colors.secondary} style={{ marginRight: 4 }} />
+                <Text style={[styles.evaluatorBtnText, { color: colors.secondaryDark }]}>
+                  Customer (Priya)
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.evaluatorBtn}
+                onPress={() => handleAutofillDemo('admin')}
+                activeOpacity={0.7}
+              >
+                <Ionicons name="shield-outline" size={13} color={colors.primary} style={{ marginRight: 4 }} />
+                <Text style={[styles.evaluatorBtnText, { color: colors.primary }]}>
+                  Admin Manager
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -201,70 +260,88 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: 20,
-    paddingTop: 16,
+    paddingTop: 14,
     paddingBottom: 32,
   },
   brandContainer: {
     alignItems: 'center',
     marginVertical: 18,
   },
-  logoBadge: {
-    width: 64,
-    height: 64,
-    borderRadius: 20,
+  emblemWrapper: {
+    marginBottom: 12,
+  },
+  emblemOuter: {
+    width: 60,
+    height: 60,
+    borderRadius: 18,
     backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 6,
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.35,
+    shadowOpacity: 0.25,
     shadowRadius: 8,
-    marginBottom: 12,
+    borderWidth: 1.5,
+    borderColor: colors.accent,
+  },
+  studioPreTitle: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.accentDark,
+    letterSpacing: 2,
+    marginBottom: 4,
   },
   brandTitle: {
     fontSize: 24,
     fontWeight: '800',
-    color: colors.text,
+    color: colors.primary,
     letterSpacing: -0.5,
   },
   brandSubtitle: {
-    fontSize: 13,
+    fontSize: 12,
     color: colors.textSecondary,
     marginTop: 4,
+    textAlign: 'center',
+    fontWeight: '500',
   },
   card: {
     backgroundColor: colors.surface,
     borderRadius: 20,
-    padding: 20,
+    padding: 22,
     borderWidth: 1,
     borderColor: colors.border,
     elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.05,
     shadowRadius: 6,
   },
+  cardHeaderWrap: {
+    marginBottom: 16,
+  },
   formTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '800',
-    color: colors.text,
+    color: colors.primary,
+    letterSpacing: -0.3,
   },
   formSubtitle: {
-    fontSize: 13,
-    color: colors.textSecondary,
-    marginTop: 4,
-    marginBottom: 18,
+    fontSize: 12,
+    color: colors.textMuted,
+    marginTop: 3,
+    fontWeight: '500',
   },
   inputLabel: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: colors.text,
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.textMuted,
+    letterSpacing: 0.8,
     marginBottom: 6,
   },
   roleContainer: {
     flexDirection: 'row',
-    gap: 10,
+    gap: 8,
     marginBottom: 16,
   },
   roleButton: {
@@ -272,35 +349,36 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 11,
-    borderRadius: 12,
+    paddingVertical: 10,
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: colors.border,
-    backgroundColor: colors.cardAlt,
+    backgroundColor: colors.background,
   },
   roleButtonActiveCustomer: {
-    backgroundColor: colors.incomeDark,
-    borderColor: colors.incomeDark,
+    backgroundColor: colors.secondary,
+    borderColor: colors.secondaryDark,
   },
   roleButtonActiveAdmin: {
     backgroundColor: colors.primary,
-    borderColor: colors.primary,
+    borderColor: colors.primaryDark,
   },
   roleButtonText: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '700',
     color: colors.textSecondary,
+    letterSpacing: 0.2,
   },
   roleButtonTextActive: {
     color: '#FFFFFF',
   },
   inputGroup: {
-    marginBottom: 16,
+    marginBottom: 14,
   },
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.cardAlt,
+    backgroundColor: colors.background,
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: 12,
@@ -315,9 +393,9 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    paddingVertical: 12,
+    paddingVertical: 11,
     fontSize: 14,
-    color: colors.text,
+    color: colors.primary,
   },
   errorText: {
     fontSize: 11,
@@ -331,18 +409,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.primary,
     paddingVertical: 14,
-    borderRadius: 14,
-    marginTop: 6,
+    borderRadius: 12,
+    marginTop: 8,
     elevation: 3,
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.25,
     shadowRadius: 5,
+    borderWidth: 1,
+    borderColor: colors.accentDark,
   },
   primaryButtonText: {
     color: '#FFFFFF',
-    fontSize: 15,
-    fontWeight: '700',
+    fontSize: 14,
+    fontWeight: '800',
+    letterSpacing: 0.3,
   },
   switchRow: {
     flexDirection: 'row',
@@ -351,13 +432,55 @@ const styles = StyleSheet.create({
     marginTop: 18,
   },
   switchText: {
-    fontSize: 13,
+    fontSize: 12,
     color: colors.textSecondary,
+    fontWeight: '500',
   },
   switchLink: {
-    fontSize: 13,
+    fontSize: 12,
+    fontWeight: '800',
+    color: colors.secondaryDark,
+    letterSpacing: 0.2,
+  },
+  evaluatorCard: {
+    marginTop: 20,
+    backgroundColor: colors.surface,
+    padding: 12,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  evaluatorHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+    paddingHorizontal: 4,
+  },
+  evaluatorTitle: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.textMuted,
+    letterSpacing: 0.8,
+    marginLeft: 6,
+  },
+  evaluatorButtonsRow: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  evaluatorBtn: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+    borderRadius: 8,
+    backgroundColor: colors.background,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  evaluatorBtnText: {
+    fontSize: 11,
     fontWeight: '700',
-    color: colors.primary,
   },
 });
 

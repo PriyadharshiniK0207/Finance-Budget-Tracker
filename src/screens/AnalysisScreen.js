@@ -5,7 +5,6 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -40,7 +39,7 @@ const AnalysisScreen = ({ navigation }) => {
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <CustomHeader
         title="Financial Analysis"
-        subtitle={isAdmin ? 'Admin Global Audit' : 'Income & Expense Analytics'}
+        subtitle={isAdmin ? 'Institutional Audit' : 'Capital Allocation & Trends'}
         navigation={navigation}
       />
 
@@ -52,16 +51,16 @@ const AnalysisScreen = ({ navigation }) => {
         {isAdmin ? (
           <View style={styles.adminBanner}>
             <View style={styles.adminHeaderRow}>
-              <Ionicons name="shield-checkmark" size={20} color={colors.primary} />
-              <Text style={styles.adminTitle}>Admin System Analysis & Oversight</Text>
+              <Ionicons name="shield-checkmark" size={18} color={colors.accentDark} />
+              <Text style={styles.adminTitle}>Institutional Financial Oversight</Text>
             </View>
             <Text style={styles.adminDesc}>
-              Auditing all user transactions across the system. Real-time cash flow verification.
+              System-wide transaction reconciliation and capital liquidity compliance audit.
             </Text>
             <View style={styles.adminMetricsRow}>
               <View style={styles.adminMetric}>
                 <Text style={styles.adminMetricVal}>{transactions.length}</Text>
-                <Text style={styles.adminMetricLabel}>Total Records</Text>
+                <Text style={styles.adminMetricLabel}>Total Entries</Text>
               </View>
               <View style={styles.adminMetric}>
                 <Text style={styles.adminMetricVal}>₹{(overallTotals.totalIncome + overallTotals.totalExpense).toLocaleString('en-IN')}</Text>
@@ -77,7 +76,7 @@ const AnalysisScreen = ({ navigation }) => {
 
         {/* Date Filter Pills */}
         <View style={styles.filterSection}>
-          <Text style={styles.sectionLabel}>Analysis Timeframe</Text>
+          <Text style={styles.sectionLabel}>ANALYSIS CYCLE</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -104,21 +103,22 @@ const AnalysisScreen = ({ navigation }) => {
         {/* Key Metrics Cards */}
         <View style={styles.statGrid}>
           <StatCard
-            title={`${selectedMonth} Balance`}
+            title={`${selectedMonth} Net Position`}
             amount={netBalance}
             type={netBalance >= 0 ? 'income' : 'expense'}
-            subtitle={`Savings Efficiency: ${savingsRate}%`}
+            subtitle={`Capital Retention Efficiency: ${savingsRate}%`}
+            isFeatured={true}
             style={styles.fullWidthStat}
           />
           <View style={styles.row}>
             <StatCard
-              title="Total Income"
+              title="Total Inflow"
               amount={totalIncome}
               type="income"
               style={styles.halfWidthStat}
             />
             <StatCard
-              title="Total Expenses"
+              title="Total Outflow"
               amount={totalExpense}
               type="expense"
               style={styles.halfWidthStat}
@@ -131,7 +131,7 @@ const AnalysisScreen = ({ navigation }) => {
           <View style={styles.chartHeader}>
             <View>
               <Text style={styles.chartTitle}>Category Spending Breakdown</Text>
-              <Text style={styles.chartSubtitle}>Expense allocation by department / category</Text>
+              <Text style={styles.chartSubtitle}>Department-wise capital deployment</Text>
             </View>
             <View style={styles.chartBadge}>
               <Text style={styles.chartBadgeText}>{categoryStats.length} Categories</Text>
@@ -145,7 +145,7 @@ const AnalysisScreen = ({ navigation }) => {
                 <View style={styles.catMetaRow}>
                   <View style={styles.catNameWrap}>
                     <View style={[styles.catIconWrap, { backgroundColor: cat.bgColor }]}>
-                      <Ionicons name={cat.icon} size={14} color={cat.color} />
+                      <Ionicons name={cat.icon} size={13} color={cat.color} />
                     </View>
                     <Text style={styles.catName}>{cat.name}</Text>
                   </View>
@@ -172,9 +172,9 @@ const AnalysisScreen = ({ navigation }) => {
           })}
         </View>
 
-        {/* Monthly Income vs Expense Comparison Bar */}
+        {/* Cashflow Ratio Comparison */}
         <View style={styles.chartCard}>
-          <Text style={styles.chartTitle}>Income vs Expense Ratio</Text>
+          <Text style={styles.chartTitle}>Cashflow Ratio (Inflow vs Outflow)</Text>
           <Text style={styles.chartSubtitle}>Proportion of earnings deployed into expenditure</Text>
 
           <View style={styles.ratioBarWrap}>
@@ -184,9 +184,9 @@ const AnalysisScreen = ({ navigation }) => {
 
           <View style={styles.ratioLabelsRow}>
             <View style={styles.ratioLabelItem}>
-              <View style={[styles.dot, { backgroundColor: colors.incomeDark }]} />
+              <View style={[styles.dot, { backgroundColor: colors.income }]} />
               <Text style={styles.ratioLabelText}>
-                Income: ₹{totalIncome.toLocaleString('en-IN')} (
+                Inflow: ₹{totalIncome.toLocaleString('en-IN')} (
                 {totalIncome + totalExpense > 0
                   ? Math.round((totalIncome / (totalIncome + totalExpense)) * 100)
                   : 50}
@@ -197,7 +197,7 @@ const AnalysisScreen = ({ navigation }) => {
             <View style={styles.ratioLabelItem}>
               <View style={[styles.dot, { backgroundColor: colors.expense }]} />
               <Text style={styles.ratioLabelText}>
-                Expenses: ₹{totalExpense.toLocaleString('en-IN')} (
+                Outflow: ₹{totalExpense.toLocaleString('en-IN')} (
                 {totalIncome + totalExpense > 0
                   ? Math.round((totalExpense / (totalIncome + totalExpense)) * 100)
                   : 50}
@@ -207,11 +207,11 @@ const AnalysisScreen = ({ navigation }) => {
           </View>
         </View>
 
-        {/* Recent Transactions List */}
+        {/* Recent Audit Transactions */}
         <View style={styles.txSection}>
-          <Text style={styles.chartTitle}>Recent Audit Transactions</Text>
+          <Text style={styles.chartTitle}>Recent Journal Entries</Text>
           <Text style={styles.chartSubtitle}>
-            Showing transactions for {selectedMonth} ({displayTransactions.length} items)
+            Transactions for {selectedMonth} ({displayTransactions.length} items)
           </Text>
 
           <View style={{ marginTop: 10 }}>
@@ -236,11 +236,11 @@ const styles = StyleSheet.create({
     paddingBottom: 28,
   },
   adminBanner: {
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.accentLight,
     padding: 14,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: colors.primarySoft,
+    borderColor: colors.accentBorder,
     marginBottom: 14,
   },
   adminHeaderRow: {
@@ -258,6 +258,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: colors.textSecondary,
     marginBottom: 10,
+    lineHeight: 15,
   },
   adminMetricsRow: {
     flexDirection: 'row',
@@ -265,14 +266,14 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 10,
     borderWidth: 1,
-    borderColor: colors.primarySoft,
+    borderColor: colors.accentBorder,
   },
   adminMetric: {
     flex: 1,
     alignItems: 'center',
   },
   adminMetricVal: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '800',
     color: colors.primary,
   },
@@ -280,14 +281,16 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: colors.textMuted,
     marginTop: 2,
+    fontWeight: '600',
   },
   filterSection: {
     marginBottom: 14,
   },
   sectionLabel: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: colors.textSecondary,
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.textMuted,
+    letterSpacing: 0.8,
     marginBottom: 8,
   },
   filterPills: {
@@ -304,7 +307,7 @@ const styles = StyleSheet.create({
   },
   filterPillActive: {
     backgroundColor: colors.primary,
-    borderColor: colors.primary,
+    borderColor: colors.primaryDark,
   },
   filterPillText: {
     fontSize: 12,
@@ -335,6 +338,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     marginBottom: 14,
+    elevation: 2,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.03,
+    shadowRadius: 3,
   },
   chartHeader: {
     flexDirection: 'row',
@@ -345,22 +353,26 @@ const styles = StyleSheet.create({
   chartTitle: {
     fontSize: 15,
     fontWeight: '800',
-    color: colors.text,
+    color: colors.primary,
+    letterSpacing: -0.2,
   },
   chartSubtitle: {
     fontSize: 11,
     color: colors.textMuted,
     marginTop: 2,
+    fontWeight: '500',
   },
   chartBadge: {
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 10,
-    backgroundColor: colors.cardAlt,
+    borderRadius: 8,
+    backgroundColor: colors.background,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   chartBadgeText: {
-    fontSize: 11,
-    fontWeight: '600',
+    fontSize: 10,
+    fontWeight: '700',
     color: colors.textSecondary,
   },
   categoryBarRow: {
@@ -379,7 +391,7 @@ const styles = StyleSheet.create({
   catIconWrap: {
     width: 24,
     height: 24,
-    borderRadius: 6,
+    borderRadius: 7,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 8,
@@ -387,12 +399,12 @@ const styles = StyleSheet.create({
   catName: {
     fontSize: 12,
     fontWeight: '700',
-    color: colors.text,
+    color: colors.primary,
   },
   catAmount: {
     fontSize: 12,
-    fontWeight: '700',
-    color: colors.text,
+    fontWeight: '800',
+    color: colors.primary,
   },
   catPercent: {
     fontSize: 11,
@@ -402,7 +414,7 @@ const styles = StyleSheet.create({
   progressTrack: {
     height: 6,
     borderRadius: 3,
-    backgroundColor: colors.cardAlt,
+    backgroundColor: colors.background,
     overflow: 'hidden',
   },
   progressBar: {
@@ -411,14 +423,14 @@ const styles = StyleSheet.create({
   },
   ratioBarWrap: {
     flexDirection: 'row',
-    height: 12,
-    borderRadius: 6,
+    height: 10,
+    borderRadius: 5,
     overflow: 'hidden',
     marginTop: 14,
     marginBottom: 10,
   },
   ratioBarIncome: {
-    backgroundColor: colors.incomeDark,
+    backgroundColor: colors.income,
   },
   ratioBarExpense: {
     backgroundColor: colors.expense,
@@ -432,9 +444,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: 7,
+    height: 7,
+    borderRadius: 3.5,
     marginRight: 6,
   },
   ratioLabelText: {

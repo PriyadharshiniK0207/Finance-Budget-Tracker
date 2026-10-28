@@ -8,7 +8,6 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -51,12 +50,12 @@ const EditProfileScreen = ({ navigation }) => {
           onPress={() => navigation.goBack()}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
-          <Ionicons name="arrow-back" size={22} color={colors.text} />
+          <Ionicons name="arrow-back" size={20} color={colors.primary} />
         </TouchableOpacity>
         <View style={styles.headerTitleWrap}>
-          <Text style={styles.headerTitle}>{isAdmin ? 'Edit Admin Profile' : 'Edit Profile'}</Text>
+          <Text style={styles.headerTitle}>{isAdmin ? 'Edit Administrator Profile' : 'Edit Profile'}</Text>
           <Text style={styles.headerSubtitle}>
-            {isAdmin ? 'Administrator Profile Parameters' : 'Customer Account Parameters'}
+            {isAdmin ? 'Administrator Credentials & Parameters' : 'Customer Account Parameters'}
           </Text>
         </View>
       </View>
@@ -81,9 +80,9 @@ const EditProfileScreen = ({ navigation }) => {
 
             {/* Name */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Full Name *</Text>
+              <Text style={styles.label}>FULL LEGAL NAME *</Text>
               <View style={[styles.inputWrapper, errors.name && styles.inputWrapperError]}>
-                <Ionicons name="person-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
+                <Ionicons name="person-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Enter full name"
@@ -100,9 +99,9 @@ const EditProfileScreen = ({ navigation }) => {
 
             {/* Email */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Email Address *</Text>
+              <Text style={styles.label}>EMAIL ADDRESS *</Text>
               <View style={[styles.inputWrapper, errors.email && styles.inputWrapperError]}>
-                <Ionicons name="mail-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
+                <Ionicons name="mail-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Enter email address"
@@ -121,9 +120,9 @@ const EditProfileScreen = ({ navigation }) => {
 
             {/* Phone */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Mobile Phone Number *</Text>
+              <Text style={styles.label}>MOBILE PHONE NUMBER *</Text>
               <View style={[styles.inputWrapper, errors.phone && styles.inputWrapperError]}>
-                <Ionicons name="call-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
+                <Ionicons name="call-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Enter 10-digit mobile number"
@@ -143,10 +142,10 @@ const EditProfileScreen = ({ navigation }) => {
             {/* Monthly Budget Target */}
             <View style={styles.inputGroup}>
               <Text style={styles.label}>
-                {isAdmin ? 'System Budget Allocation (₹) *' : 'Monthly Budget Target (₹) *'}
+                {isAdmin ? 'SYSTEM BUDGET ALLOCATION (₹) *' : 'MONTHLY BUDGET ALLOCATION (₹) *'}
               </Text>
               <View style={[styles.inputWrapper, errors.budget && styles.inputWrapperError]}>
-                <Ionicons name="wallet-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
+                <Ionicons name="wallet-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="e.g. 50000"
@@ -168,9 +167,9 @@ const EditProfileScreen = ({ navigation }) => {
               onPress={handleSave}
               activeOpacity={0.8}
             >
-              <Ionicons name="checkmark-circle" size={20} color="#FFFFFF" style={{ marginRight: 8 }} />
+              <Ionicons name="checkmark-circle" size={18} color={colors.accent} style={{ marginRight: 8 }} />
               <Text style={styles.saveBtnText}>
-                {isAdmin ? 'Save Admin Profile' : 'Save Profile Changes'}
+                {isAdmin ? 'Save Administrator Profile' : 'Save Profile Changes'}
               </Text>
             </TouchableOpacity>
 
@@ -201,28 +200,33 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    borderBottomColor: colors.borderLight,
   },
   backBtn: {
-    width: 40,
-    height: 40,
+    width: 38,
+    height: 38,
     borderRadius: 10,
-    backgroundColor: colors.cardAlt,
+    backgroundColor: colors.background,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   headerTitleWrap: {
     flex: 1,
   },
   headerTitle: {
-    fontSize: 17,
-    fontWeight: '700',
-    color: colors.text,
+    fontSize: 16,
+    fontWeight: '800',
+    color: colors.primary,
+    letterSpacing: -0.2,
   },
   headerSubtitle: {
     fontSize: 11,
     color: colors.textMuted,
+    fontWeight: '500',
+    marginTop: 1,
   },
   scrollContent: {
     padding: 16,
@@ -234,35 +238,38 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     elevation: 3,
-    shadowColor: '#000',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 5,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '800',
-    color: colors.text,
+    color: colors.primary,
+    letterSpacing: -0.2,
   },
   sectionSubtitle: {
-    fontSize: 12,
-    color: colors.textSecondary,
+    fontSize: 11,
+    color: colors.textMuted,
     marginTop: 2,
     marginBottom: 18,
+    fontWeight: '500',
   },
   inputGroup: {
-    marginBottom: 16,
+    marginBottom: 15,
   },
   label: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: colors.text,
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.textMuted,
+    letterSpacing: 0.8,
     marginBottom: 6,
   },
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.cardAlt,
+    backgroundColor: colors.background,
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: 12,
@@ -277,9 +284,9 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    paddingVertical: 12,
+    paddingVertical: 11,
     fontSize: 14,
-    color: colors.text,
+    color: colors.primary,
   },
   errorText: {
     fontSize: 11,
@@ -293,18 +300,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.primary,
     paddingVertical: 14,
-    borderRadius: 14,
+    borderRadius: 12,
     marginTop: 10,
     elevation: 3,
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.25,
     shadowRadius: 5,
+    borderWidth: 1,
+    borderColor: colors.accentDark,
   },
   saveBtnText: {
     color: '#FFFFFF',
-    fontSize: 15,
-    fontWeight: '700',
+    fontSize: 14,
+    fontWeight: '800',
+    letterSpacing: 0.3,
   },
   cancelBtn: {
     alignItems: 'center',
@@ -313,7 +323,7 @@ const styles = StyleSheet.create({
   },
   cancelBtnText: {
     color: colors.textSecondary,
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '600',
   },
 });

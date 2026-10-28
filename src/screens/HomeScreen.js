@@ -35,9 +35,9 @@ const HomeScreen = ({ navigation }) => {
 
   // Period display titles
   const periodLabels = {
-    daily: 'Today (28 Oct 2026)',
-    weekly: 'Last 7 Days (22 - 28 Oct)',
-    monthly: 'Current Month (October 2026)',
+    daily: 'Today • 28 Oct 2026',
+    weekly: 'Last 7 Days • 22 - 28 Oct',
+    monthly: 'Current Cycle • October 2026',
   };
 
   const totalPeriodVolume = report.income + report.expense;
@@ -48,8 +48,8 @@ const HomeScreen = ({ navigation }) => {
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       {/* App Header with Drawer Hamburger & Quick Add */}
       <CustomHeader
-        title="Finance & Budget"
-        subtitle="Dashboard & Analytics"
+        title="Modern Wealth Studio"
+        subtitle="Private Wealth & Treasury"
         navigation={navigation}
         onAddPress={() => setModalVisible(true)}
       />
@@ -58,17 +58,18 @@ const HomeScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* Welcome Banner */}
+        {/* Editorial Welcome Card */}
         <View style={styles.welcomeCard}>
           <View style={styles.welcomeTextWrap}>
+            <Text style={styles.welcomePre}>PORTFOLIO OVERVIEW</Text>
             <Text style={styles.greetingText}>
-              Welcome back,{' '}
-              <Text style={{ fontWeight: '800' }}>
+              Welcome,{' '}
+              <Text style={{ fontWeight: '800', color: colors.primary }}>
                 {currentUser?.name || 'Priyadharshini K'}
               </Text>
             </Text>
             <Text style={styles.welcomeSubtext}>
-              {isAdmin ? 'System Administrator Portal' : 'Smart Personal Budget Tracker'}
+              {isAdmin ? 'System Audit & Capital Oversight' : 'Personal Treasury & Spending Plan'}
             </Text>
           </View>
           <View style={[styles.roleBadge, isAdmin ? styles.roleBadgeAdmin : styles.roleBadgeCustomer]}>
@@ -81,11 +82,11 @@ const HomeScreen = ({ navigation }) => {
         {/* Admin Overview Notice (if Admin) */}
         {isAdmin && (
           <View style={styles.adminBanner}>
-            <Ionicons name="information-circle" size={20} color={colors.primary} />
+            <Ionicons name="shield-checkmark" size={18} color={colors.accentDark} />
             <View style={{ marginLeft: 10, flex: 1 }}>
-              <Text style={styles.adminBannerTitle}>Administrator Mode</Text>
+              <Text style={styles.adminBannerTitle}>Institutional Auditing Enabled</Text>
               <Text style={styles.adminBannerText}>
-                You have global auditing view. You can view all financial reports and analytics. Customer profile editing and customer wallet management are restricted.
+                Cross-account volume and reserve allocations are visible. Real-time ledger reconciliation in progress.
               </Text>
             </View>
           </View>
@@ -97,7 +98,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.reportSection}>
           <View style={styles.sectionHeaderRow}>
             <View>
-              <Text style={styles.sectionTitle}>Period Reports</Text>
+              <Text style={styles.sectionTitle}>Period Financial Reports</Text>
               <Text style={styles.sectionSubtitle}>{periodLabels[reportPeriod]}</Text>
             </View>
 
@@ -107,8 +108,8 @@ const HomeScreen = ({ navigation }) => {
               onPress={() => setModalVisible(true)}
               activeOpacity={0.8}
             >
-              <Ionicons name="add" size={16} color="#FFFFFF" />
-              <Text style={styles.addTxButtonText}>Add Tx</Text>
+              <Ionicons name="add" size={15} color="#FFFFFF" />
+              <Text style={styles.addTxButtonText}>Post Tx</Text>
             </TouchableOpacity>
           </View>
 
@@ -124,8 +125,8 @@ const HomeScreen = ({ navigation }) => {
             >
               <Ionicons
                 name="today-outline"
-                size={14}
-                color={reportPeriod === 'daily' ? '#FFFFFF' : colors.textSecondary}
+                size={13}
+                color={reportPeriod === 'daily' ? colors.primary : colors.textMuted}
                 style={{ marginRight: 4 }}
               />
               <Text
@@ -148,8 +149,8 @@ const HomeScreen = ({ navigation }) => {
             >
               <Ionicons
                 name="calendar-outline"
-                size={14}
-                color={reportPeriod === 'weekly' ? '#FFFFFF' : colors.textSecondary}
+                size={13}
+                color={reportPeriod === 'weekly' ? colors.primary : colors.textMuted}
                 style={{ marginRight: 4 }}
               />
               <Text
@@ -172,8 +173,8 @@ const HomeScreen = ({ navigation }) => {
             >
               <Ionicons
                 name="stats-chart-outline"
-                size={14}
-                color={reportPeriod === 'monthly' ? '#FFFFFF' : colors.textSecondary}
+                size={13}
+                color={reportPeriod === 'monthly' ? colors.primary : colors.textMuted}
                 style={{ marginRight: 4 }}
               />
               <Text
@@ -190,22 +191,23 @@ const HomeScreen = ({ navigation }) => {
           {/* Period Financial Metrics */}
           <View style={styles.statsGrid}>
             <StatCard
-              title={`${reportPeriod} Net Balance`}
+              title={`${reportPeriod} Net Liquidity`}
               amount={report.balance}
               type={report.balance >= 0 ? 'income' : 'expense'}
-              subtitle={`${report.savingsRate}% savings rate`}
+              subtitle={`Capital Retention Efficiency: ${report.savingsRate}%`}
+              isFeatured={true}
               style={styles.fullWidthStat}
             />
 
             <View style={styles.statRow}>
               <StatCard
-                title={`${reportPeriod} Income`}
+                title="Total Inflow"
                 amount={report.income}
                 type="income"
                 style={styles.halfWidthStat}
               />
               <StatCard
-                title={`${reportPeriod} Expense`}
+                title="Total Outflow"
                 amount={report.expense}
                 type="expense"
                 style={styles.halfWidthStat}
@@ -213,12 +215,12 @@ const HomeScreen = ({ navigation }) => {
             </View>
           </View>
 
-          {/* Visual Indicator: Comparative Income vs Expense Bar */}
+          {/* Visual Indicator: Comparative Inflow vs Outflow Cashflow Bar */}
           <View style={styles.visualBarCard}>
             <View style={styles.visualBarHeader}>
               <Text style={styles.visualBarTitle}>Cashflow Ratio</Text>
               <Text style={styles.visualBarStats}>
-                Income {incomePercent}% • Expense {expensePercent}%
+                Inflow {incomePercent}% • Outflow {expensePercent}%
               </Text>
             </View>
             <View style={styles.barTrack}>
@@ -227,12 +229,12 @@ const HomeScreen = ({ navigation }) => {
             </View>
             <View style={styles.barLegend}>
               <View style={styles.legendItem}>
-                <View style={[styles.legendDot, { backgroundColor: colors.incomeDark }]} />
-                <Text style={styles.legendText}>Income (+₹{report.income.toLocaleString('en-IN')})</Text>
+                <View style={[styles.legendDot, { backgroundColor: colors.income }]} />
+                <Text style={styles.legendText}>Inflow (+₹{report.income.toLocaleString('en-IN')})</Text>
               </View>
               <View style={styles.legendItem}>
                 <View style={[styles.legendDot, { backgroundColor: colors.expense }]} />
-                <Text style={styles.legendText}>Expense (-₹{report.expense.toLocaleString('en-IN')})</Text>
+                <Text style={styles.legendText}>Outflow (-₹{report.expense.toLocaleString('en-IN')})</Text>
               </View>
             </View>
           </View>
@@ -241,10 +243,10 @@ const HomeScreen = ({ navigation }) => {
           {report.topCategory.amount > 0 && (
             <View style={styles.topCatCard}>
               <View style={styles.topCatIconBox}>
-                <Ionicons name="flame" size={18} color="#D97706" />
+                <Ionicons name="flame" size={17} color={colors.accentDark} />
               </View>
               <View style={{ flex: 1 }}>
-                <Text style={styles.topCatTitle}>Highest Spending Category</Text>
+                <Text style={styles.topCatTitle}>Highest Allocation Department</Text>
                 <Text style={styles.topCatDesc}>
                   {report.topCategory.name} (₹{report.topCategory.amount.toLocaleString('en-IN')})
                 </Text>
@@ -255,15 +257,15 @@ const HomeScreen = ({ navigation }) => {
 
         {/* Quick Nav Shortcuts */}
         <View style={styles.quickNavSection}>
-          <Text style={styles.sectionTitle}>Feature Navigation</Text>
+          <Text style={styles.sectionTitle}>Studio Modules</Text>
           <View style={styles.quickNavGrid}>
             <TouchableOpacity
               style={styles.quickNavBtn}
               onPress={() => navigation.navigate('Analysis')}
               activeOpacity={0.8}
             >
-              <View style={[styles.quickNavIcon, { backgroundColor: '#EDE9FE' }]}>
-                <Ionicons name="pie-chart" size={20} color={colors.purple} />
+              <View style={[styles.quickNavIcon, { backgroundColor: colors.secondaryLight }]}>
+                <Ionicons name="pie-chart" size={18} color={colors.secondary} />
               </View>
               <Text style={styles.quickNavLabel}>Analysis</Text>
             </TouchableOpacity>
@@ -279,10 +281,10 @@ const HomeScreen = ({ navigation }) => {
               }}
               activeOpacity={0.8}
             >
-              <View style={[styles.quickNavIcon, { backgroundColor: colors.incomeLight }]}>
-                <Ionicons name="receipt" size={20} color={colors.incomeDark} />
+              <View style={[styles.quickNavIcon, { backgroundColor: '#EAF3F8' }]}>
+                <Ionicons name="receipt" size={18} color={colors.catTravel} />
               </View>
-              <Text style={styles.quickNavLabel}>Month Tx</Text>
+              <Text style={styles.quickNavLabel}>Ledger</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -296,8 +298,8 @@ const HomeScreen = ({ navigation }) => {
               }}
               activeOpacity={0.8}
             >
-              <View style={[styles.quickNavIcon, { backgroundColor: '#FEF3C7' }]}>
-                <Ionicons name="grid" size={20} color="#D97706" />
+              <View style={[styles.quickNavIcon, { backgroundColor: colors.catFoodBg }]}>
+                <Ionicons name="grid" size={18} color={colors.catFood} />
               </View>
               <Text style={styles.quickNavLabel}>Categories</Text>
             </TouchableOpacity>
@@ -305,16 +307,12 @@ const HomeScreen = ({ navigation }) => {
             <TouchableOpacity
               style={styles.quickNavBtn}
               onPress={() => {
-                if (isAdmin) {
-                  navigation.navigate('Analysis');
-                } else {
-                  navigation.navigate('Profile');
-                }
+                navigation.navigate('Profile');
               }}
               activeOpacity={0.8}
             >
-              <View style={[styles.quickNavIcon, { backgroundColor: '#DBEAFE' }]}>
-                <Ionicons name="person" size={20} color={colors.info} />
+              <View style={[styles.quickNavIcon, { backgroundColor: colors.accentLight }]}>
+                <Ionicons name="person" size={18} color={colors.accentDark} />
               </View>
               <Text style={styles.quickNavLabel}>Profile</Text>
             </TouchableOpacity>
@@ -336,16 +334,16 @@ const HomeScreen = ({ navigation }) => {
                 }
               }}
             >
-              <Text style={styles.seeAllText}>View All</Text>
+              <Text style={styles.seeAllText}>View Ledger</Text>
             </TouchableOpacity>
           </View>
 
           {report.transactions.length === 0 ? (
             <View style={styles.emptyCard}>
               <Ionicons name="receipt-outline" size={36} color={colors.textMuted} />
-              <Text style={styles.emptyTitle}>No Transactions Recorded</Text>
+              <Text style={styles.emptyTitle}>No Journal Entries</Text>
               <Text style={styles.emptyDesc}>
-                Tap "+ Add Tx" above to record a new income or expense for this period.
+                Tap "+ Post Tx" above to record an inflow or outflow entry.
               </Text>
             </View>
           ) : (
@@ -385,60 +383,78 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     marginBottom: 12,
+    elevation: 2,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 4,
   },
   welcomeTextWrap: {
     flex: 1,
   },
+  welcomePre: {
+    fontSize: 9,
+    fontWeight: '800',
+    color: colors.accentDark,
+    letterSpacing: 1.2,
+    marginBottom: 2,
+  },
   greetingText: {
-    fontSize: 16,
-    color: colors.text,
+    fontSize: 15,
+    color: colors.textSecondary,
+    fontWeight: '500',
   },
   welcomeSubtext: {
-    fontSize: 12,
-    color: colors.textSecondary,
+    fontSize: 11,
+    color: colors.textMuted,
     marginTop: 2,
+    fontWeight: '500',
   },
   roleBadge: {
     paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
+    paddingVertical: 5,
+    borderRadius: 8,
+    borderWidth: 1,
   },
   roleBadgeCustomer: {
-    backgroundColor: colors.incomeLight,
+    backgroundColor: colors.secondaryLight,
+    borderColor: colors.secondaryBorder,
   },
   roleBadgeAdmin: {
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.accentLight,
+    borderColor: colors.accentBorder,
   },
   roleBadgeText: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '800',
+    letterSpacing: 0.4,
   },
   roleBadgeTextCustomer: {
-    color: colors.incomeDark,
+    color: colors.secondaryDark,
   },
   roleBadgeTextAdmin: {
-    color: colors.primary,
+    color: colors.accentDark,
   },
   adminBanner: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.primaryLight,
-    padding: 14,
+    backgroundColor: colors.accentLight,
+    padding: 13,
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: colors.primarySoft,
+    borderColor: colors.accentBorder,
     marginBottom: 14,
   },
   adminBannerTitle: {
-    fontSize: 13,
-    fontWeight: '700',
+    fontSize: 12,
+    fontWeight: '800',
     color: colors.primaryDark,
   },
   adminBannerText: {
     fontSize: 11,
     color: colors.textSecondary,
     marginTop: 2,
-    lineHeight: 16,
+    lineHeight: 15,
   },
   reportSection: {
     marginBottom: 16,
@@ -450,14 +466,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '800',
-    color: colors.text,
+    color: colors.primary,
+    letterSpacing: -0.2,
   },
   sectionSubtitle: {
     fontSize: 11,
     color: colors.textMuted,
-    fontWeight: '500',
+    fontWeight: '600',
     marginTop: 2,
   },
   addTxButton: {
@@ -466,17 +483,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     paddingHorizontal: 12,
     paddingVertical: 7,
-    borderRadius: 10,
+    borderRadius: 9,
+    borderWidth: 1,
+    borderColor: colors.accentDark,
   },
   addTxButtonText: {
     color: '#FFFFFF',
-    fontSize: 12,
-    fontWeight: '700',
+    fontSize: 11,
+    fontWeight: '800',
     marginLeft: 4,
+    letterSpacing: 0.2,
   },
   periodTabsContainer: {
     flexDirection: 'row',
-    backgroundColor: colors.surface,
+    backgroundColor: colors.cardAlt,
     padding: 4,
     borderRadius: 12,
     borderWidth: 1,
@@ -488,25 +508,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 9,
+    paddingVertical: 8,
     borderRadius: 9,
   },
   periodTabActive: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.surface,
     elevation: 2,
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3,
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   periodTabText: {
     fontSize: 12,
     fontWeight: '600',
-    color: colors.textSecondary,
+    color: colors.textMuted,
   },
   periodTabTextActive: {
-    color: '#FFFFFF',
-    fontWeight: '700',
+    color: colors.primary,
+    fontWeight: '800',
   },
   statsGrid: {
     marginBottom: 12,
@@ -536,9 +558,9 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   visualBarTitle: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '700',
-    color: colors.text,
+    color: colors.primary,
   },
   visualBarStats: {
     fontSize: 11,
@@ -546,16 +568,16 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
   },
   barTrack: {
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: colors.cardAlt,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: colors.background,
     flexDirection: 'row',
     overflow: 'hidden',
     marginBottom: 8,
   },
   barIncome: {
     height: '100%',
-    backgroundColor: colors.incomeDark,
+    backgroundColor: colors.income,
   },
   barExpense: {
     height: '100%',
@@ -570,9 +592,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   legendDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: 7,
+    height: 7,
+    borderRadius: 3.5,
     marginRight: 6,
   },
   legendText: {
@@ -583,30 +605,32 @@ const styles = StyleSheet.create({
   topCatCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFBEB',
+    backgroundColor: colors.catFoodBg,
     padding: 12,
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#FDE68A',
+    borderColor: colors.accentBorder,
   },
   topCatIconBox: {
-    width: 34,
-    height: 34,
-    borderRadius: 10,
-    backgroundColor: '#FEF3C7',
+    width: 32,
+    height: 32,
+    borderRadius: 9,
+    backgroundColor: colors.surface,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
   },
   topCatTitle: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: '#92400E',
+    fontSize: 10,
+    fontWeight: '700',
+    color: colors.catFood,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   topCatDesc: {
     fontSize: 13,
     fontWeight: '800',
-    color: '#78350F',
+    color: colors.primary,
     marginTop: 2,
   },
   quickNavSection: {
@@ -614,23 +638,23 @@ const styles = StyleSheet.create({
   },
   quickNavGrid: {
     flexDirection: 'row',
-    gap: 10,
+    gap: 9,
     marginTop: 10,
   },
   quickNavBtn: {
     flex: 1,
     backgroundColor: colors.surface,
-    paddingVertical: 14,
-    paddingHorizontal: 6,
+    paddingVertical: 13,
+    paddingHorizontal: 4,
     borderRadius: 14,
     alignItems: 'center',
     borderWidth: 1,
     borderColor: colors.border,
   },
   quickNavIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
+    width: 38,
+    height: 38,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 6,
@@ -638,7 +662,8 @@ const styles = StyleSheet.create({
   quickNavLabel: {
     fontSize: 11,
     fontWeight: '700',
-    color: colors.text,
+    color: colors.primary,
+    letterSpacing: 0.1,
   },
   txSection: {
     marginTop: 4,
@@ -652,7 +677,7 @@ const styles = StyleSheet.create({
   seeAllText: {
     fontSize: 12,
     fontWeight: '700',
-    color: colors.primary,
+    color: colors.secondaryDark,
   },
   emptyCard: {
     backgroundColor: colors.surface,
@@ -665,7 +690,7 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: colors.text,
+    color: colors.primary,
     marginTop: 8,
   },
   emptyDesc: {

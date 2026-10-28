@@ -43,9 +43,9 @@ const CategoriesScreen = ({ navigation }) => {
         {/* Admin Restriction Notice */}
         {isAdmin && (
           <View style={styles.adminBanner}>
-            <Ionicons name="information-circle" size={20} color={colors.primary} />
+            <Ionicons name="shield-checkmark" size={18} color={colors.accentDark} />
             <View style={{ marginLeft: 10, flex: 1 }}>
-              <Text style={styles.adminBannerTitle}>Customer-Only Screen (Admin Preview)</Text>
+              <Text style={styles.adminBannerTitle}>Customer Allocation Audit Mode</Text>
               <Text style={styles.adminBannerText}>
                 Categories and department limits configured by customer. Admin auditing access enabled.
               </Text>
@@ -53,15 +53,15 @@ const CategoriesScreen = ({ navigation }) => {
           </View>
         )}
 
-        {/* Overall Category Budget Summary Card */}
+        {/* Overall Category Budget Summary Card - Modern Wealth Studio Hero */}
         <View style={styles.summaryCard}>
           <View style={styles.summaryTopRow}>
             <View>
-              <Text style={styles.summaryLabel}>Total Category Expenditure</Text>
+              <Text style={styles.summaryLabel}>TOTAL EXPENDITURE ALLOCATED</Text>
               <Text style={styles.summaryValue}>₹{totalExpense.toLocaleString('en-IN')}</Text>
             </View>
             <View style={styles.budgetPill}>
-              <Text style={styles.budgetPillText}>{overallUsedPercent}% of Total Budget</Text>
+              <Text style={styles.budgetPillText}>{overallUsedPercent}% OF CEILING</Text>
             </View>
           </View>
 
@@ -72,7 +72,7 @@ const CategoriesScreen = ({ navigation }) => {
                 styles.progressBar,
                 {
                   width: `${Math.min(100, overallUsedPercent)}%`,
-                  backgroundColor: overallUsedPercent > 90 ? colors.expense : colors.primary,
+                  backgroundColor: overallUsedPercent > 90 ? colors.expense : colors.accent,
                 },
               ]}
             />
@@ -80,18 +80,18 @@ const CategoriesScreen = ({ navigation }) => {
 
           <View style={styles.summaryFooterRow}>
             <Text style={styles.footerSubtext}>
-              Combined Budget Limit: ₹{totalCategoryBudget.toLocaleString('en-IN')}
+              Treasury Ceiling: ₹{totalCategoryBudget.toLocaleString('en-IN')}
             </Text>
             <Text style={styles.footerCount}>
-              {categoryStats.length} Active Categories
+              {categoryStats.length} Budget Departments
             </Text>
           </View>
         </View>
 
         {/* Categories List Title */}
         <View style={styles.listHeaderRow}>
-          <Text style={styles.listTitle}>Select Category for Details</Text>
-          <Text style={styles.listSubtitle}>Tap any category to view full transaction logs</Text>
+          <Text style={styles.listTitle}>Department Portfolios</Text>
+          <Text style={styles.listSubtitle}>Select a category to audit individual ledger entries</Text>
         </View>
 
         {/* Category Cards */}
@@ -110,7 +110,7 @@ const CategoriesScreen = ({ navigation }) => {
               {/* Top Row: Icon + Name + Chevron */}
               <View style={styles.cardHeader}>
                 <View style={[styles.iconBox, { backgroundColor: cat.bgColor }]}>
-                  <Ionicons name={cat.icon} size={22} color={cat.color} />
+                  <Ionicons name={cat.icon} size={20} color={cat.color} />
                 </View>
 
                 <View style={styles.headerInfo}>
@@ -120,28 +120,28 @@ const CategoriesScreen = ({ navigation }) => {
                   </Text>
                 </View>
 
-                <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
+                <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
               </View>
 
               {/* Middle Row: Spending vs Budget */}
               <View style={styles.spendingRow}>
                 <View>
-                  <Text style={styles.metricLabel}>Spent</Text>
+                  <Text style={styles.metricLabel}>Disbursed</Text>
                   <Text style={[styles.metricValue, { color: cat.color }]}>
                     ₹{cat.totalSpent.toLocaleString('en-IN')}
                   </Text>
                 </View>
 
                 <View style={{ alignItems: 'center' }}>
-                  <Text style={styles.metricLabel}>Budget Limit</Text>
+                  <Text style={styles.metricLabel}>Ceiling Limit</Text>
                   <Text style={styles.metricValue}>
                     ₹{cat.budget.toLocaleString('en-IN')}
                   </Text>
                 </View>
 
                 <View style={{ alignItems: 'flex-end' }}>
-                  <Text style={styles.metricLabel}>Transactions</Text>
-                  <Text style={styles.metricValue}>{cat.txCount} items</Text>
+                  <Text style={styles.metricLabel}>Journal Entries</Text>
+                  <Text style={styles.metricValue}>{cat.txCount} tx</Text>
                 </View>
               </View>
 
@@ -161,18 +161,18 @@ const CategoriesScreen = ({ navigation }) => {
               {/* Bottom Row: Status Badge */}
               <View style={styles.cardFooter}>
                 <Text style={styles.budgetStatusText}>
-                  {budgetPercent}% used • ₹{cat.remainingBudget.toLocaleString('en-IN')} remaining
+                  {budgetPercent}% consumed • ₹{cat.remainingBudget.toLocaleString('en-IN')} available
                 </Text>
                 {isDanger ? (
-                  <View style={[styles.alertPill, { backgroundColor: colors.expenseLight }]}>
-                    <Text style={[styles.alertPillText, { color: colors.expense }]}>Over Budget</Text>
+                  <View style={[styles.alertPill, { backgroundColor: colors.expenseLight, borderColor: colors.expenseBorder }]}>
+                    <Text style={[styles.alertPillText, { color: colors.expense }]}>Over Limit</Text>
                   </View>
                 ) : isWarning ? (
-                  <View style={[styles.alertPill, { backgroundColor: '#FEF3C7' }]}>
-                    <Text style={[styles.alertPillText, { color: '#B45309' }]}>Near Limit</Text>
+                  <View style={[styles.alertPill, { backgroundColor: colors.warningLight, borderColor: colors.warningBorder }]}>
+                    <Text style={[styles.alertPillText, { color: colors.warning }]}>Near Limit</Text>
                   </View>
                 ) : (
-                  <View style={[styles.alertPill, { backgroundColor: colors.incomeLight }]}>
+                  <View style={[styles.alertPill, { backgroundColor: colors.incomeLight, borderColor: colors.incomeBorder }]}>
                     <Text style={[styles.alertPillText, { color: colors.incomeDark }]}>On Track</Text>
                   </View>
                 )}
@@ -198,16 +198,16 @@ const styles = StyleSheet.create({
   adminBanner: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.accentLight,
     padding: 12,
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: colors.primarySoft,
+    borderColor: colors.accentBorder,
     marginBottom: 12,
   },
   adminBannerTitle: {
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: '800',
     color: colors.primaryDark,
   },
   adminBannerText: {
@@ -216,57 +216,61 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   summaryCard: {
-    backgroundColor: colors.surface,
+    backgroundColor: colors.primary,
     borderRadius: 18,
-    padding: 16,
+    padding: 18,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.primaryDark,
     marginBottom: 16,
     elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
     shadowRadius: 5,
   },
   summaryTopRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 12,
   },
   summaryLabel: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: colors.textSecondary,
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.accent,
+    letterSpacing: 1,
   },
   summaryValue: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: '800',
-    color: colors.text,
+    color: '#FFFFFF',
     letterSpacing: -0.5,
     marginTop: 2,
   },
   budgetPill: {
-    backgroundColor: colors.primaryLight,
+    backgroundColor: 'rgba(217, 182, 111, 0.2)',
     paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
+    paddingVertical: 5,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.accent,
   },
   budgetPillText: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: colors.primaryDark,
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.accent,
+    letterSpacing: 0.5,
   },
   progressTrack: {
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: colors.cardAlt,
+    height: 7,
+    borderRadius: 3.5,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
     overflow: 'hidden',
-    marginBottom: 10,
+    marginBottom: 12,
   },
   progressBar: {
     height: '100%',
-    borderRadius: 4,
+    borderRadius: 3.5,
   },
   summaryFooterRow: {
     flexDirection: 'row',
@@ -275,26 +279,28 @@ const styles = StyleSheet.create({
   },
   footerSubtext: {
     fontSize: 11,
-    color: colors.textMuted,
+    color: 'rgba(255, 255, 255, 0.75)',
     fontWeight: '500',
   },
   footerCount: {
     fontSize: 11,
     fontWeight: '700',
-    color: colors.primary,
+    color: colors.accent,
   },
   listHeaderRow: {
     marginBottom: 10,
   },
   listTitle: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '800',
-    color: colors.text,
+    color: colors.primary,
+    letterSpacing: -0.2,
   },
   listSubtitle: {
     fontSize: 11,
     color: colors.textMuted,
     marginTop: 2,
+    fontWeight: '500',
   },
   categoryCard: {
     backgroundColor: colors.surface,
@@ -304,9 +310,9 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     marginBottom: 10,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
+    shadowOpacity: 0.03,
     shadowRadius: 3,
   },
   cardHeader: {
@@ -315,8 +321,8 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   iconBox: {
-    width: 44,
-    height: 44,
+    width: 42,
+    height: 42,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -326,45 +332,50 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   categoryName: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: colors.text,
+    fontSize: 14,
+    fontWeight: '800',
+    color: colors.primary,
+    letterSpacing: -0.2,
   },
   categoryDesc: {
     fontSize: 11,
     color: colors.textMuted,
     marginTop: 2,
+    fontWeight: '500',
   },
   spendingRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 10,
-    backgroundColor: colors.cardAlt,
+    backgroundColor: colors.background,
     padding: 10,
     borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
   },
   metricLabel: {
-    fontSize: 10,
+    fontSize: 9,
     color: colors.textMuted,
-    fontWeight: '600',
+    fontWeight: '700',
     textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   metricValue: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: colors.text,
+    fontSize: 12,
+    fontWeight: '800',
+    color: colors.primary,
     marginTop: 2,
   },
   cardProgressTrack: {
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: colors.cardAlt,
+    height: 5,
+    borderRadius: 2.5,
+    backgroundColor: colors.borderLight,
     overflow: 'hidden',
     marginBottom: 8,
   },
   cardProgressBar: {
     height: '100%',
-    borderRadius: 3,
+    borderRadius: 2.5,
   },
   cardFooter: {
     flexDirection: 'row',
@@ -378,12 +389,14 @@ const styles = StyleSheet.create({
   },
   alertPill: {
     paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 8,
+    paddingVertical: 3,
+    borderRadius: 6,
+    borderWidth: 1,
   },
   alertPillText: {
-    fontSize: 10,
-    fontWeight: '700',
+    fontSize: 9,
+    fontWeight: '800',
+    letterSpacing: 0.2,
   },
 });
 

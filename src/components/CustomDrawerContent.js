@@ -19,7 +19,7 @@ const CustomDrawerContent = (props) => {
   const handleLogout = () => {
     Alert.alert(
       'Sign Out Confirmation',
-      'Are you sure you want to sign out from Finance & Budget Tracker?',
+      'Are you sure you want to sign out from Modern Wealth Studio?',
       [
         { text: 'Cancel', style: 'cancel' },
         {
@@ -57,10 +57,10 @@ const CustomDrawerContent = (props) => {
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      {/* Drawer User Header Section */}
+      {/* Drawer User Header Section - Midnight Studio Header */}
       <View style={styles.header}>
         <View style={styles.avatarRow}>
-          <View style={[styles.avatar, isAdmin && styles.avatarAdmin]}>
+          <View style={styles.avatar}>
             <Text style={styles.avatarText}>{initials}</Text>
           </View>
           <View style={styles.userInfo}>
@@ -79,7 +79,7 @@ const CustomDrawerContent = (props) => {
               <Ionicons
                 name={isAdmin ? 'shield-checkmark' : 'person'}
                 size={11}
-                color={isAdmin ? colors.primaryDark : colors.incomeDark}
+                color={isAdmin ? colors.accent : colors.secondary}
               />
               <Text
                 style={[
@@ -87,7 +87,7 @@ const CustomDrawerContent = (props) => {
                   isAdmin ? styles.rolePillTextAdmin : styles.rolePillTextCustomer,
                 ]}
               >
-                {isAdmin ? 'Administrator' : 'Customer Account'}
+                {isAdmin ? 'Administrator' : 'Verified Customer'}
               </Text>
             </View>
           </View>
@@ -100,7 +100,7 @@ const CustomDrawerContent = (props) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.menuScroll}
       >
-        <Text style={styles.sectionHeader}>MAIN NAVIGATION</Text>
+        <Text style={styles.sectionHeader}>WEALTH STUDIO PORTFOLIO</Text>
 
         {/* Dashboard */}
         <TouchableOpacity
@@ -108,8 +108,8 @@ const CustomDrawerContent = (props) => {
           onPress={() => navigateTo('MainTabs', { screen: 'Home' })}
           activeOpacity={0.7}
         >
-          <View style={[styles.iconBox, { backgroundColor: colors.primaryLight }]}>
-            <Ionicons name="grid-outline" size={20} color={colors.primary} />
+          <View style={[styles.iconBox, { backgroundColor: colors.accentLight }]}>
+            <Ionicons name="grid-outline" size={18} color={colors.accentDark} />
           </View>
           <Text style={styles.menuItemText}>Dashboard & Reports</Text>
         </TouchableOpacity>
@@ -120,8 +120,8 @@ const CustomDrawerContent = (props) => {
           onPress={() => navigateTo('MainTabs', { screen: 'Analysis' })}
           activeOpacity={0.7}
         >
-          <View style={[styles.iconBox, { backgroundColor: '#EDE9FE' }]}>
-            <Ionicons name="pie-chart-outline" size={20} color={colors.purple} />
+          <View style={[styles.iconBox, { backgroundColor: colors.secondaryLight }]}>
+            <Ionicons name="pie-chart-outline" size={18} color={colors.secondary} />
           </View>
           <Text style={styles.menuItemText}>Financial Analysis</Text>
         </TouchableOpacity>
@@ -134,10 +134,10 @@ const CustomDrawerContent = (props) => {
               onPress={() => navigateTo('MainTabs', { screen: 'Transactions' })}
               activeOpacity={0.7}
             >
-              <View style={[styles.iconBox, { backgroundColor: colors.incomeLight }]}>
-                <Ionicons name="receipt-outline" size={20} color={colors.incomeDark} />
+              <View style={[styles.iconBox, { backgroundColor: '#EAF3F8' }]}>
+                <Ionicons name="receipt-outline" size={18} color={colors.catTravel} />
               </View>
-              <Text style={styles.menuItemText}>Month-wise Transactions</Text>
+              <Text style={styles.menuItemText}>Month-wise Ledger</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -145,8 +145,8 @@ const CustomDrawerContent = (props) => {
               onPress={() => navigateTo('MainTabs', { screen: 'Categories' })}
               activeOpacity={0.7}
             >
-              <View style={[styles.iconBox, { backgroundColor: '#FEF3C7' }]}>
-                <Ionicons name="folder-open-outline" size={20} color="#D97706" />
+              <View style={[styles.iconBox, { backgroundColor: colors.catFoodBg }]}>
+                <Ionicons name="folder-open-outline" size={18} color={colors.catFood} />
               </View>
               <Text style={styles.menuItemText}>Spending Categories</Text>
             </TouchableOpacity>
@@ -156,8 +156,8 @@ const CustomDrawerContent = (props) => {
               onPress={() => navigateTo('MainTabs', { screen: 'Profile' })}
               activeOpacity={0.7}
             >
-              <View style={[styles.iconBox, { backgroundColor: '#DBEAFE' }]}>
-                <Ionicons name="person-outline" size={20} color={colors.info} />
+              <View style={[styles.iconBox, { backgroundColor: colors.catShoppingBg }]}>
+                <Ionicons name="person-outline" size={18} color={colors.catShopping} />
               </View>
               <Text style={styles.menuItemText}>Profile & Budget</Text>
             </TouchableOpacity>
@@ -173,17 +173,18 @@ const CustomDrawerContent = (props) => {
               onPress={() => navigateTo('MainTabs', { screen: 'Profile' })}
               activeOpacity={0.7}
             >
-              <View style={[styles.iconBox, { backgroundColor: '#DBEAFE' }]}>
-                <Ionicons name="person-circle-outline" size={20} color={colors.primary} />
+              <View style={[styles.iconBox, { backgroundColor: colors.accentLight }]}>
+                <Ionicons name="person-circle-outline" size={18} color={colors.accentDark} />
               </View>
               <Text style={styles.menuItemText}>Admin Profile Settings</Text>
             </TouchableOpacity>
+
             <View style={styles.adminInfoCard}>
-              <Ionicons name="shield-outline" size={20} color={colors.primary} />
+              <Ionicons name="shield-outline" size={18} color={colors.accentDark} />
               <View style={{ marginLeft: 10, flex: 1 }}>
-                <Text style={styles.adminInfoTitle}>Admin Mode Active</Text>
+                <Text style={styles.adminInfoTitle}>Audit Mode Active</Text>
                 <Text style={styles.adminInfoDesc}>
-                  Global platform auditing enabled. You can edit your administrator profile parameters.
+                  Global wealth tracking and institutional reconciliation enabled.
                 </Text>
               </View>
             </View>
@@ -192,9 +193,9 @@ const CustomDrawerContent = (props) => {
 
         {/* Role Switcher Action */}
         <View style={styles.roleSwitchCard}>
-          <Text style={styles.roleSwitchTitle}>Role Switcher (Viva Demo)</Text>
+          <Text style={styles.roleSwitchTitle}>Role Toggle (Exam Evaluator)</Text>
           <Text style={styles.roleSwitchSubtitle}>
-            Current Role: <Text style={{ fontWeight: '700' }}>{isAdmin ? 'Admin' : 'Customer'}</Text>
+            Active Role: <Text style={{ fontWeight: '800', color: colors.primary }}>{isAdmin ? 'Administrator' : 'Customer'}</Text>
           </Text>
           <TouchableOpacity
             style={[
@@ -206,12 +207,12 @@ const CustomDrawerContent = (props) => {
           >
             <Ionicons
               name="swap-horizontal"
-              size={16}
+              size={15}
               color="#FFFFFF"
               style={{ marginRight: 6 }}
             />
             <Text style={styles.switchBtnText}>
-              {isAdmin ? 'Switch to Customer Role' : 'Switch to Admin Role'}
+              {isAdmin ? 'Switch to Customer Account' : 'Switch to Admin Account'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -224,12 +225,12 @@ const CustomDrawerContent = (props) => {
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Ionicons name="log-out-outline" size={20} color={colors.expense} />
+          <Ionicons name="log-out-outline" size={18} color={colors.expense} />
           <Text style={styles.logoutText}>Sign Out</Text>
         </TouchableOpacity>
 
         <Text style={styles.versionText}>
-          MCA Sem III EoS Practical Exam • 75 Marks
+          Modern Wealth Studio • MCA Sem III EoS
         </Text>
       </View>
     </SafeAreaView>
@@ -243,36 +244,30 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: 20,
-    paddingTop: 16,
+    paddingTop: 18,
     paddingBottom: 20,
+    backgroundColor: colors.primary,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-    backgroundColor: colors.cardAlt,
+    borderBottomColor: colors.primaryDark,
   },
   avatarRow: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   avatar: {
-    width: 54,
-    height: 54,
-    borderRadius: 27,
-    backgroundColor: colors.primary,
+    width: 52,
+    height: 52,
+    borderRadius: 14,
+    backgroundColor: colors.primaryDark,
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 3,
-    shadowColor: colors.primary,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-  },
-  avatarAdmin: {
-    backgroundColor: '#312E81',
+    borderWidth: 1.5,
+    borderColor: colors.accent,
   },
   avatarText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '800',
-    color: '#FFFFFF',
+    color: colors.accent,
     letterSpacing: 1,
   },
   userInfo: {
@@ -280,13 +275,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   userName: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: colors.text,
+    fontSize: 15,
+    fontWeight: '800',
+    color: '#FFFFFF',
+    letterSpacing: -0.2,
   },
   userEmail: {
-    fontSize: 12,
-    color: colors.textSecondary,
+    fontSize: 11,
+    color: 'rgba(255, 255, 255, 0.7)',
     marginTop: 2,
   },
   rolePill: {
@@ -295,14 +291,17 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     paddingHorizontal: 8,
     paddingVertical: 3,
-    borderRadius: 12,
+    borderRadius: 6,
     marginTop: 6,
+    borderWidth: 1,
   },
   rolePillCustomer: {
-    backgroundColor: colors.incomeLight,
+    backgroundColor: 'rgba(8, 127, 104, 0.2)',
+    borderColor: colors.secondary,
   },
   rolePillAdmin: {
-    backgroundColor: colors.primaryLight,
+    backgroundColor: 'rgba(217, 182, 111, 0.2)',
+    borderColor: colors.accent,
   },
   rolePillText: {
     fontSize: 10,
@@ -310,23 +309,24 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   rolePillTextCustomer: {
-    color: colors.incomeDark,
+    color: '#A7D9CD',
   },
   rolePillTextAdmin: {
-    color: colors.primaryDark,
+    color: colors.accent,
   },
   menuContainer: {
     flex: 1,
+    backgroundColor: colors.background,
   },
   menuScroll: {
     paddingVertical: 14,
     paddingHorizontal: 16,
   },
   sectionHeader: {
-    fontSize: 11,
-    fontWeight: '700',
+    fontSize: 10,
+    fontWeight: '800',
     color: colors.textMuted,
-    letterSpacing: 0.8,
+    letterSpacing: 1,
     marginBottom: 8,
     marginTop: 6,
     paddingHorizontal: 6,
@@ -334,40 +334,44 @@ const styles = StyleSheet.create({
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: 11,
     paddingHorizontal: 12,
     borderRadius: 12,
     marginBottom: 4,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
   },
   iconBox: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
+    width: 32,
+    height: 32,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 14,
+    marginRight: 12,
   },
   menuItemText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: colors.text,
+    fontSize: 13,
+    fontWeight: '700',
+    color: colors.primary,
   },
   adminSection: {
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 8,
+    marginBottom: 8,
   },
   adminInfoCard: {
     flexDirection: 'row',
     padding: 12,
     borderRadius: 12,
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.accentLight,
     borderWidth: 1,
-    borderColor: colors.primarySoft,
+    borderColor: colors.accentBorder,
     alignItems: 'center',
+    marginTop: 6,
   },
   adminInfoTitle: {
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: '800',
     color: colors.primaryDark,
   },
   adminInfoDesc: {
@@ -377,17 +381,17 @@ const styles = StyleSheet.create({
     lineHeight: 15,
   },
   roleSwitchCard: {
-    marginTop: 20,
+    marginTop: 18,
     padding: 14,
     borderRadius: 14,
-    backgroundColor: colors.cardAlt,
+    backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.border,
   },
   roleSwitchTitle: {
     fontSize: 12,
-    fontWeight: '700',
-    color: colors.text,
+    fontWeight: '800',
+    color: colors.primary,
   },
   roleSwitchSubtitle: {
     fontSize: 11,
@@ -399,19 +403,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 9,
+    paddingVertical: 10,
     borderRadius: 10,
   },
   switchBtnToCustomer: {
-    backgroundColor: colors.incomeDark,
+    backgroundColor: colors.secondary,
   },
   switchBtnToAdmin: {
     backgroundColor: colors.primary,
   },
   switchBtnText: {
     color: '#FFFFFF',
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '700',
+    letterSpacing: 0.2,
   },
   footer: {
     paddingHorizontal: 20,
@@ -419,23 +424,25 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     borderTopWidth: 1,
     borderTopColor: colors.border,
+    backgroundColor: colors.surface,
   },
   logoutBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
+    paddingVertical: 8,
   },
   logoutText: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 13,
+    fontWeight: '700',
     color: colors.expense,
-    marginLeft: 10,
+    marginLeft: 8,
   },
   versionText: {
     fontSize: 10,
     color: colors.textMuted,
     textAlign: 'center',
-    marginTop: 10,
+    marginTop: 8,
+    fontWeight: '600',
   },
 });
 

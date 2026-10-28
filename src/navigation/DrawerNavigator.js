@@ -24,7 +24,7 @@ const DrawerNavigator = () => {
           maxWidth: 340,
         },
         drawerType: 'front',
-        overlayColor: 'rgba(15, 23, 42, 0.5)',
+        overlayColor: 'rgba(23, 35, 63, 0.65)',
       }}
     >
       {/* Root Tabs */}

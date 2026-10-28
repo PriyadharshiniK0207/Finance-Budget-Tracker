@@ -30,7 +30,7 @@ const CustomHeader = ({
             hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
             activeOpacity={0.7}
           >
-            <Ionicons name="arrow-back" size={24} color={colors.text} />
+            <Ionicons name="arrow-back" size={22} color={colors.primary} />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
@@ -50,7 +50,7 @@ const CustomHeader = ({
             hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
             activeOpacity={0.7}
           >
-            <Ionicons name="menu-outline" size={26} color={colors.text} />
+            <Ionicons name="menu-outline" size={24} color={colors.primary} />
           </TouchableOpacity>
         )}
       </View>
@@ -92,8 +92,8 @@ const CustomHeader = ({
             <Ionicons
               name={isAdmin ? 'shield-checkmark' : 'person-circle'}
               size={13}
-              color={isAdmin ? colors.primary : colors.incomeDark}
-              style={{ marginRight: 3 }}
+              color={isAdmin ? colors.accentDark : colors.secondary}
+              style={{ marginRight: 4 }}
             />
             <Text
               style={[
@@ -112,19 +112,19 @@ const CustomHeader = ({
 
 const styles = StyleSheet.create({
   header: {
-    height: Platform.OS === 'ios' ? 56 : 60,
+    height: Platform.OS === 'ios' ? 56 : 62,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    borderBottomColor: colors.borderLight,
     elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 3,
   },
   leftContainer: {
     width: 44,
@@ -132,12 +132,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   iconBtn: {
-    width: 40,
-    height: 40,
+    width: 38,
+    height: 38,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.cardAlt,
+    backgroundColor: colors.background,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   titleContainer: {
     flex: 1,
@@ -146,16 +148,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   title: {
-    fontSize: 17,
-    fontWeight: '700',
-    color: colors.text,
-    letterSpacing: -0.3,
+    fontSize: 16,
+    fontWeight: '800',
+    color: colors.primary,
+    letterSpacing: -0.2,
   },
   subtitle: {
     fontSize: 11,
     color: colors.textMuted,
-    fontWeight: '500',
+    fontWeight: '600',
     marginTop: 1,
+    letterSpacing: 0.2,
   },
   rightContainer: {
     flexDirection: 'row',
@@ -166,42 +169,43 @@ const styles = StyleSheet.create({
   addBtn: {
     width: 34,
     height: 34,
-    borderRadius: 17,
-    backgroundColor: colors.primary,
+    borderRadius: 10,
+    backgroundColor: colors.secondary,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 8,
     elevation: 2,
-    shadowColor: colors.primary,
+    shadowColor: colors.secondary,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.25,
     shadowRadius: 3,
   },
   roleBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 8,
+    paddingHorizontal: 9,
     paddingVertical: 5,
-    borderRadius: 20,
+    borderRadius: 8,
     borderWidth: 1,
   },
   roleBadgeCustomer: {
-    backgroundColor: colors.incomeLight,
-    borderColor: colors.incomeBorder,
+    backgroundColor: colors.secondaryLight,
+    borderColor: colors.secondaryBorder,
   },
   roleBadgeAdmin: {
-    backgroundColor: colors.primaryLight,
-    borderColor: colors.primarySoft,
+    backgroundColor: colors.accentLight,
+    borderColor: colors.accentBorder,
   },
   roleText: {
     fontSize: 11,
     fontWeight: '700',
+    letterSpacing: 0.3,
   },
   roleTextCustomer: {
-    color: colors.incomeDark,
+    color: colors.secondaryDark,
   },
   roleTextAdmin: {
-    color: colors.primary,
+    color: colors.accentDark,
   },
 });
 
