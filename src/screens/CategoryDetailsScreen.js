@@ -16,7 +16,49 @@ import AddTransactionModal from '../components/AddTransactionModal';
 
 const CategoryDetailsScreen = ({ route, navigation }) => {
   const { categoryId = 'food', categoryName = 'Food & Dining' } = route.params || {};
-  const { categoryStats, transactions } = useFinance();
+  const { categoryStats, transactions, isAdmin, switchRole } = useFinance();
+
+  // If Admin attempts to access, strictly enforce Customer-Only Requirement
+  if (isAdmin) {
+    return (
+      <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.backBtn}
+            onPress={() => navigation.goBack()}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <Ionicons name="arrow-back" size={20} color={colors.primary} />
+          </TouchableOpacity>
+          <View style={styles.headerTitleWrap}>
+            <Text style={styles.headerTitle}>Access Denied</Text>
+            <Text style={styles.headerSubtitle}>Customer Only Feature</Text>
+          </View>
+        </View>
+
+        <View style={styles.restrictedContainer}>
+          <View style={styles.restrictedIconBox}>
+            <Ionicons name="lock-closed" size={42} color={colors.expense} />
+          </View>
+          <Text style={styles.restrictedTitle}>Access Denied for Admin</Text>
+          <View style={styles.requirementBadge}>
+            <Text style={styles.requirementBadgeText}>Customer Only Screen (Exam Req #6 — 5 Marks)</Text>
+          </View>
+          <Text style={styles.restrictedDesc}>
+            Category breakdown, departmental transactions, and transaction logs are accessible exclusively to Customer accounts.
+          </Text>
+          <TouchableOpacity
+            style={styles.switchRoleBtn}
+            onPress={() => switchRole('customer')}
+            activeOpacity={0.8}
+          >
+            <Ionicons name="swap-horizontal" size={16} color="#FFFFFF" style={{ marginRight: 6 }} />
+            <Text style={styles.switchRoleBtnText}>Switch to Customer Mode</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -345,6 +387,72 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     textAlign: 'center',
     marginTop: 4,
+  },
+  restrictedContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+  restrictedIconBox: {
+    width: 80,
+    height: 80,
+    borderRadius: 24,
+    backgroundColor: colors.expenseLight,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 18,
+    borderWidth: 1,
+    borderColor: colors.expenseBorder,
+  },
+  restrictedTitle: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: colors.primary,
+    marginBottom: 6,
+    textAlign: 'center',
+  },
+  requirementBadge: {
+    backgroundColor: colors.accentLight,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.accentBorder,
+    marginBottom: 14,
+  },
+  requirementBadgeText: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: colors.accentDark,
+    letterSpacing: 0.2,
+  },
+  restrictedDesc: {
+    fontSize: 13,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    lineHeight: 20,
+    marginBottom: 24,
+    paddingHorizontal: 16,
+  },
+  switchRoleBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.secondary,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 14,
+    elevation: 3,
+    shadowColor: colors.secondary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  switchRoleBtnText: {
+    color: '#FFFFFF',
+    fontSize: 13,
+    fontWeight: '800',
+    letterSpacing: 0.2,
   },
 });
 

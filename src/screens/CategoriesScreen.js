@@ -13,7 +13,41 @@ import { useFinance } from '../context/FinanceContext';
 import CustomHeader from '../components/CustomHeader';
 
 const CategoriesScreen = ({ navigation }) => {
-  const { categoryStats, overallTotals, isAdmin } = useFinance();
+  const { categoryStats, overallTotals, isAdmin, switchRole } = useFinance();
+
+  // If Admin attempts to access, strictly enforce Customer-Only Requirement
+  if (isAdmin) {
+    return (
+      <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <CustomHeader
+          title="Spending Categories"
+          subtitle="Customer Only Feature"
+          navigation={navigation}
+          showRoleBadge={true}
+        />
+        <View style={styles.restrictedContainer}>
+          <View style={styles.restrictedIconBox}>
+            <Ionicons name="lock-closed" size={42} color={colors.expense} />
+          </View>
+          <Text style={styles.restrictedTitle}>Access Denied for Admin</Text>
+          <View style={styles.requirementBadge}>
+            <Text style={styles.requirementBadgeText}>Customer Only Screen (Exam Req #5 — 5 Marks)</Text>
+          </View>
+          <Text style={styles.restrictedDesc}>
+            Department spending budgets, expenditure allocations, and category limit monitoring are configured and managed exclusively by Customer accounts.
+          </Text>
+          <TouchableOpacity
+            style={styles.switchRoleBtn}
+            onPress={() => switchRole('customer')}
+            activeOpacity={0.8}
+          >
+            <Ionicons name="swap-horizontal" size={16} color="#FFFFFF" style={{ marginRight: 6 }} />
+            <Text style={styles.switchRoleBtnText}>Switch to Customer Mode</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   const totalExpense = overallTotals.totalExpense;
   const totalCategoryBudget = categoryStats.reduce((sum, c) => sum + c.budget, 0);
@@ -40,19 +74,6 @@ const CategoriesScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* Admin Restriction Notice */}
-        {isAdmin && (
-          <View style={styles.adminBanner}>
-            <Ionicons name="shield-checkmark" size={18} color={colors.accentDark} />
-            <View style={{ marginLeft: 10, flex: 1 }}>
-              <Text style={styles.adminBannerTitle}>Customer Allocation Audit Mode</Text>
-              <Text style={styles.adminBannerText}>
-                Categories and department limits configured by customer. Admin auditing access enabled.
-              </Text>
-            </View>
-          </View>
-        )}
-
         {/* Overall Category Budget Summary Card */}
         <View style={styles.summaryCard}>
           <View style={styles.summaryTopRow}>
@@ -91,7 +112,7 @@ const CategoriesScreen = ({ navigation }) => {
         {/* Categories List Title */}
         <View style={styles.listHeaderRow}>
           <Text style={styles.listTitle}>Department Portfolios</Text>
-          <Text style={styles.listSubtitle}>Select a category to audit individual ledger entries</Text>
+          <Text style={styles.listSubtitle}>Select a category to view individual transaction history</Text>
         </View>
 
         {/* Category Cards */}
@@ -395,6 +416,72 @@ const styles = StyleSheet.create({
   },
   alertPillText: {
     fontSize: 9,
+    fontWeight: '800',
+    letterSpacing: 0.2,
+  },
+  restrictedContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+  restrictedIconBox: {
+    width: 80,
+    height: 80,
+    borderRadius: 24,
+    backgroundColor: colors.expenseLight,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 18,
+    borderWidth: 1,
+    borderColor: colors.expenseBorder,
+  },
+  restrictedTitle: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: colors.primary,
+    marginBottom: 6,
+    textAlign: 'center',
+  },
+  requirementBadge: {
+    backgroundColor: colors.accentLight,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.accentBorder,
+    marginBottom: 14,
+  },
+  requirementBadgeText: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: colors.accentDark,
+    letterSpacing: 0.2,
+  },
+  restrictedDesc: {
+    fontSize: 13,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    lineHeight: 20,
+    marginBottom: 24,
+    paddingHorizontal: 16,
+  },
+  switchRoleBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.secondary,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 14,
+    elevation: 3,
+    shadowColor: colors.secondary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  switchRoleBtnText: {
+    color: '#FFFFFF',
+    fontSize: 13,
     fontWeight: '800',
     letterSpacing: 0.2,
   },

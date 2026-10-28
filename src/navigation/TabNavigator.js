@@ -72,31 +72,37 @@ const TabNavigator = () => {
       />
 
       {/* Month-wise Transactions Tab (Customer only - Screen 4) */}
-      <Tab.Screen
-        name="Transactions"
-        component={MonthTransactionsScreen}
-        options={{
-          tabBarLabel: 'Ledger',
-        }}
-      />
+      {isCustomer && (
+        <Tab.Screen
+          name="Transactions"
+          component={MonthTransactionsScreen}
+          options={{
+            tabBarLabel: 'Ledger',
+          }}
+        />
+      )}
 
       {/* Categories Tab (Customer only - Screen 5) */}
-      <Tab.Screen
-        name="Categories"
-        component={CategoriesScreen}
-        options={{
-          tabBarLabel: 'Categories',
-        }}
-      />
+      {isCustomer && (
+        <Tab.Screen
+          name="Categories"
+          component={CategoriesScreen}
+          options={{
+            tabBarLabel: 'Categories',
+          }}
+        />
+      )}
 
       {/* Profile Tab (Customer only - Screen 3) */}
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarLabel: 'Profile',
-        }}
-      />
+      {isCustomer && (
+        <Tab.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            tabBarLabel: 'Profile',
+          }}
+        />
+      )}
     </Tab.Navigator>
   );
 };
