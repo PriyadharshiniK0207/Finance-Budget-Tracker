@@ -39,26 +39,6 @@ const SignInScreen = ({ navigation }) => {
     });
   };
 
-  // Quick Demo Login for Viva / Exam Evaluation
-  const handleQuickDemo = (demoRole) => {
-    if (demoRole === 'admin') {
-      setEmail('admin@financetracker.com');
-      setPassword('admin123');
-      setRole('admin');
-      login('admin@financetracker.com', 'admin123', 'admin');
-    } else {
-      setEmail('priya@example.com');
-      setPassword('password123');
-      setRole('customer');
-      login('priya@example.com', 'password123', 'customer');
-    }
-
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'DrawerRoot' }],
-    });
-  };
-
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
@@ -202,40 +182,6 @@ const SignInScreen = ({ navigation }) => {
               <Text style={styles.switchText}>Don't have an account? </Text>
               <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
                 <Text style={styles.switchLink}>Sign Up</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          {/* Quick Demo Credentials Box for Exam Viva */}
-          <View style={styles.demoBox}>
-            <View style={styles.demoHeader}>
-              <Ionicons name="flash" size={16} color={colors.warning} />
-              <Text style={styles.demoTitle}>One-Tap Demo Credentials (Practical Exam)</Text>
-            </View>
-            <Text style={styles.demoSubtitle}>
-              Tap either option to immediately test the application without manual typing:
-            </Text>
-            <View style={styles.demoActions}>
-              <TouchableOpacity
-                style={[styles.demoBtn, { borderColor: colors.incomeBorder, backgroundColor: colors.incomeLight }]}
-                onPress={() => handleQuickDemo('customer')}
-                activeOpacity={0.8}
-              >
-                <Ionicons name="person" size={14} color={colors.incomeDark} style={{ marginRight: 4 }} />
-                <Text style={[styles.demoBtnText, { color: colors.incomeDark }]}>
-                  Demo Customer (Priya)
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[styles.demoBtn, { borderColor: colors.primarySoft, backgroundColor: colors.primaryLight }]}
-                onPress={() => handleQuickDemo('admin')}
-                activeOpacity={0.8}
-              >
-                <Ionicons name="shield-checkmark" size={14} color={colors.primary} style={{ marginRight: 4 }} />
-                <Text style={[styles.demoBtnText, { color: colors.primary }]}>
-                  Demo Admin (Manager)
-                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -412,48 +358,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '700',
     color: colors.primary,
-  },
-  demoBox: {
-    marginTop: 20,
-    padding: 16,
-    borderRadius: 16,
-    backgroundColor: '#FFFBEB',
-    borderWidth: 1,
-    borderColor: '#FDE68A',
-  },
-  demoHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 4,
-  },
-  demoTitle: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#92400E',
-    marginLeft: 6,
-  },
-  demoSubtitle: {
-    fontSize: 11,
-    color: '#78350F',
-    lineHeight: 16,
-    marginBottom: 10,
-  },
-  demoActions: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  demoBtn: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 9,
-    borderRadius: 10,
-    borderWidth: 1,
-  },
-  demoBtnText: {
-    fontSize: 11,
-    fontWeight: '700',
   },
 });
 
