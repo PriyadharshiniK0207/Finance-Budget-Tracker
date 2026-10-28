@@ -35,8 +35,8 @@ const ProfileScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <CustomHeader
-        title="Profile & Treasury"
-        subtitle={isAdmin ? 'Administrator Settings' : 'Personal Budget Settings'}
+        title="Profile & Budget"
+        subtitle={isAdmin ? 'Customer Profile (Admin Audit)' : 'Personal Profile & Budget'}
         navigation={navigation}
       />
 
@@ -44,14 +44,14 @@ const ProfileScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* Admin Identity Card */}
+        {/* Admin Restriction Banner (Screen 3: Profile is Customer Only) */}
         {isAdmin && (
           <View style={styles.adminBannerCard}>
-            <Ionicons name="shield-checkmark" size={22} color={colors.accentDark} />
+            <Ionicons name="information-circle" size={22} color={colors.expense} />
             <View style={{ marginLeft: 12, flex: 1 }}>
-              <Text style={styles.adminBannerTitle}>Administrator Account</Text>
+              <Text style={styles.adminBannerTitle}>Customer Only Screen (Exam Req #3)</Text>
               <Text style={styles.adminBannerDesc}>
-                Full management and auditing privileges active. You can edit your administrator profile parameters below.
+                Profile and Edit Profile features are reserved for Customer accounts only. Administrators do not have access to customer profile editing.
               </Text>
             </View>
           </View>
@@ -82,17 +82,22 @@ const ProfileScreen = ({ navigation }) => {
             </View>
           </View>
 
-          {/* Edit Profile CTA Button */}
-          <TouchableOpacity
-            style={styles.editButton}
-            onPress={handleEditPress}
-            activeOpacity={0.8}
-          >
-            <Ionicons name="create-outline" size={16} color={colors.accent} style={{ marginRight: 6 }} />
-            <Text style={styles.editButtonText}>
-              {isAdmin ? 'Edit Administrator Profile' : 'Edit Profile Information'}
-            </Text>
-          </TouchableOpacity>
+          {/* Edit Profile CTA Button (Customer Only) */}
+          {!isAdmin ? (
+            <TouchableOpacity
+              style={styles.editButton}
+              onPress={handleEditPress}
+              activeOpacity={0.8}
+            >
+              <Ionicons name="create-outline" size={16} color={colors.accent} style={{ marginRight: 6 }} />
+              <Text style={styles.editButtonText}>Edit Profile Information</Text>
+            </TouchableOpacity>
+          ) : (
+            <View style={styles.restrictedNoticeBox}>
+              <Ionicons name="lock-closed-outline" size={14} color={colors.textMuted} style={{ marginRight: 6 }} />
+              <Text style={styles.restrictedNoticeText}>Profile editing disabled for Administrator</Text>
+            </View>
+          )}
         </View>
 
         {/* Monthly Budget Performance Card (Customer only) */}
@@ -355,6 +360,23 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '800',
     letterSpacing: 0.2,
+  },
+  restrictedNoticeBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.background,
+    width: '100%',
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  restrictedNoticeText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: colors.textMuted,
   },
   budgetCard: {
     backgroundColor: colors.surface,

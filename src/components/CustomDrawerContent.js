@@ -164,27 +164,16 @@ const CustomDrawerContent = (props) => {
           </>
         )}
 
-        {/* Admin-Only Screens */}
+        {/* Admin Audit Mode Section */}
         {isAdmin && (
           <View style={styles.adminSection}>
             <Text style={styles.sectionHeader}>ADMINISTRATIVE CONTROLS</Text>
-            <TouchableOpacity
-              style={styles.menuItem}
-              onPress={() => navigateTo('MainTabs', { screen: 'Profile' })}
-              activeOpacity={0.7}
-            >
-              <View style={[styles.iconBox, { backgroundColor: colors.accentLight }]}>
-                <Ionicons name="person-circle-outline" size={18} color={colors.accentDark} />
-              </View>
-              <Text style={styles.menuItemText}>Admin Profile Settings</Text>
-            </TouchableOpacity>
-
             <View style={styles.adminInfoCard}>
               <Ionicons name="shield-outline" size={18} color={colors.accentDark} />
               <View style={{ marginLeft: 10, flex: 1 }}>
                 <Text style={styles.adminInfoTitle}>Audit Mode Active</Text>
                 <Text style={styles.adminInfoDesc}>
-                  Global wealth tracking and institutional reconciliation enabled.
+                  Institutional oversight active. Profile, Ledger, and Categories are reserved for Customer management.
                 </Text>
               </View>
             </View>

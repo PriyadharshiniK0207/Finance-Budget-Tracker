@@ -8,6 +8,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -17,6 +18,45 @@ import { validateProfile } from '../utils/validation';
 
 const EditProfileScreen = ({ navigation }) => {
   const { currentUser, updateProfile, isAdmin } = useFinance();
+
+  // If Admin somehow navigates here, strictly deny access (Screen 3: Customer Only)
+  if (isAdmin) {
+    return (
+      <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.backBtn}
+            onPress={() => navigation.goBack()}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <Ionicons name="arrow-back" size={20} color={colors.primary} />
+          </TouchableOpacity>
+          <View style={styles.headerTitleWrap}>
+            <Text style={styles.headerTitle}>Access Denied</Text>
+            <Text style={styles.headerSubtitle}>Customer Only Screen (Exam Req #3)</Text>
+          </View>
+        </View>
+
+        <View style={styles.restrictedContainer}>
+          <View style={styles.restrictedIconBox}>
+            <Ionicons name="lock-closed" size={44} color={colors.expense} />
+          </View>
+          <Text style={styles.restrictedTitle}>Access Denied for Admin</Text>
+          <Text style={styles.restrictedDesc}>
+            Profile and Edit Profile features are reserved for Customer accounts only. Administrators do not have access to customer profile editing.
+          </Text>
+          <TouchableOpacity
+            style={styles.saveBtn}
+            onPress={() => navigation.goBack()}
+            activeOpacity={0.8}
+          >
+            <Ionicons name="arrow-back" size={16} color="#FFFFFF" style={{ marginRight: 6 }} />
+            <Text style={styles.saveBtnText}>Return to Previous Screen</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   const [name, setName] = useState(currentUser?.name || '');
   const [email, setEmail] = useState(currentUser?.email || '');
@@ -38,7 +78,11 @@ const EditProfileScreen = ({ navigation }) => {
       monthlyBudget: parseFloat(budget) || 50000,
     });
 
-    navigation.goBack();
+    Alert.alert(
+      'Profile Updated',
+      'Customer profile details have been updated successfully!',
+      [{ text: 'OK', onPress: () => navigation.goBack() }]
+    );
   };
 
   return (
@@ -53,10 +97,8 @@ const EditProfileScreen = ({ navigation }) => {
           <Ionicons name="arrow-back" size={20} color={colors.primary} />
         </TouchableOpacity>
         <View style={styles.headerTitleWrap}>
-          <Text style={styles.headerTitle}>{isAdmin ? 'Edit Administrator Profile' : 'Edit Profile'}</Text>
-          <Text style={styles.headerSubtitle}>
-            {isAdmin ? 'Administrator Credentials & Parameters' : 'Customer Account Parameters'}
-          </Text>
+          <Text style={styles.headerTitle}>Edit Profile</Text>
+          <Text style={styles.headerSubtitle}>Customer Account Parameters</Text>
         </View>
       </View>
 
@@ -69,13 +111,9 @@ const EditProfileScreen = ({ navigation }) => {
           contentContainerStyle={styles.scrollContent}
         >
           <View style={styles.card}>
-            <Text style={styles.sectionTitle}>
-              {isAdmin ? 'Administrator Details' : 'Customer Information'}
-            </Text>
+            <Text style={styles.sectionTitle}>Customer Information</Text>
             <Text style={styles.sectionSubtitle}>
-              {isAdmin
-                ? 'Update your administrator name, contact, and system threshold'
-                : 'Update your account details and monthly spending limit'}
+              Update your account details and monthly spending limit
             </Text>
 
             {/* Name */}
@@ -325,6 +363,38 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     fontSize: 12,
     fontWeight: '600',
+  },
+  restrictedContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+  restrictedIconBox: {
+    width: 80,
+    height: 80,
+    borderRadius: 24,
+    backgroundColor: colors.expenseLight,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 18,
+    borderWidth: 1,
+    borderColor: colors.expenseBorder,
+  },
+  restrictedTitle: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: colors.primary,
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  restrictedDesc: {
+    fontSize: 13,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    lineHeight: 19,
+    marginBottom: 24,
+    paddingHorizontal: 16,
   },
 });
 

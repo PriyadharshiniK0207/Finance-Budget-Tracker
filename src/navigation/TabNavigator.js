@@ -94,7 +94,7 @@ const TabNavigator = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarLabel: isAdmin ? 'Admin' : 'Profile',
+          tabBarLabel: 'Profile',
         }}
       />
     </Tab.Navigator>
