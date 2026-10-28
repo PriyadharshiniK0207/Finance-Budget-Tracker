@@ -46,6 +46,7 @@ const SignUpScreen = ({ navigation }) => {
       name,
       email,
       phone,
+      password,
       role,
     });
 

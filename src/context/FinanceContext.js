@@ -14,6 +14,10 @@ export const FinanceProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState('customer'); // 'customer' | 'admin'
   const [currentUser, setCurrentUser] = useState(defaultCustomer);
+  const [registeredUsers, setRegisteredUsers] = useState([
+    defaultCustomer,
+    defaultAdmin,
+  ]);
 
   // Core Finance State
   const [transactions, setTransactions] = useState(initialTransactions);
@@ -123,13 +127,24 @@ export const FinanceProvider = ({ children }) => {
   // Profile Management (Customer Only)
   // -------------------------------------------------------------
   const updateProfile = (updatedData) => {
-    setCurrentUser((prev) => ({
-      ...prev,
-      ...updatedData,
-      monthlyBudget: updatedData.monthlyBudget !== undefined
-        ? Number(updatedData.monthlyBudget)
-        : prev.monthlyBudget,
-    }));
+    setCurrentUser((prev) => {
+      const updated = {
+        ...prev,
+        ...updatedData,
+        monthlyBudget: updatedData.monthlyBudget !== undefined
+          ? Number(updatedData.monthlyBudget)
+          : prev.monthlyBudget,
+      };
+
+      // Also persist change inside registeredUsers list
+      setRegisteredUsers((users) =>
+        users.map((u) =>
+          (u.email || '').toLowerCase() === (prev.email || '').toLowerCase() ? updated : u
+        )
+      );
+
+      return updated;
+    });
 
     const firstName = (updatedData.name || currentUser.name).split(' ')[0];
     const successMsg = `Hi ${firstName}, your profile has been updated successfully.`;
@@ -141,31 +156,82 @@ export const FinanceProvider = ({ children }) => {
   // Role & Authentication Handling
   // -------------------------------------------------------------
   const login = (email, password, selectedRole) => {
+    const cleanEmail = (email || '').trim().toLowerCase();
     const activeRole = selectedRole || 'customer';
-    setRole(activeRole);
-    if (activeRole === 'admin') {
-      setCurrentUser(defaultAdmin);
-    } else {
-      setCurrentUser(defaultCustomer);
+
+    // 1. Check if user exists in registeredUsers (signed up earlier or default)
+    const existing = registeredUsers.find(
+      (u) => (u.email || '').trim().toLowerCase() === cleanEmail
+    );
+
+    if (existing) {
+      setCurrentUser(existing);
+      setRole(existing.role || activeRole);
+      setIsAuthenticated(true);
+      showToast(`Welcome back, ${existing.name}!`);
+      return;
     }
+
+    // 2. Demo accounts matching
+    if (cleanEmail === 'priya@example.com') {
+      setCurrentUser(defaultCustomer);
+      setRole('customer');
+      setIsAuthenticated(true);
+      showToast(`Welcome back, ${defaultCustomer.name}!`);
+      return;
+    }
+
+    if (cleanEmail === 'admin@financetracker.com') {
+      setCurrentUser(defaultAdmin);
+      setRole('admin');
+      setIsAuthenticated(true);
+      showToast('Welcome back, Administrator!');
+      return;
+    }
+
+    // 3. For any other email logged in without explicit prior signup, derive name
+    const inferredName = cleanEmail.includes('@')
+      ? cleanEmail.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+      : 'User';
+
+    const fallbackUser = {
+      ...(activeRole === 'admin' ? defaultAdmin : defaultCustomer),
+      name: inferredName,
+      email: cleanEmail,
+      role: activeRole,
+    };
+
+    setRegisteredUsers((prev) => [fallbackUser, ...prev]);
+    setCurrentUser(fallbackUser);
+    setRole(activeRole);
     setIsAuthenticated(true);
-    showToast(`Welcome back, ${activeRole === 'admin' ? 'Administrator' : defaultCustomer.name}!`);
+    showToast(`Welcome back, ${fallbackUser.name}!`);
   };
 
   const signup = (userData) => {
     const activeRole = userData.role || 'customer';
     setRole(activeRole);
+
     const newUser = {
-      ...defaultCustomer,
+      ...(activeRole === 'admin' ? defaultAdmin : defaultCustomer),
       ...userData,
+      name: userData.name ? userData.name.trim() : 'User',
+      email: userData.email ? userData.email.trim().toLowerCase() : '',
+      phone: userData.phone ? userData.phone.trim() : '',
+      password: userData.password || '',
+      role: activeRole,
       accountNumber: `ACC-${Date.now().toString().slice(-6)}`,
       joinedDate: 'October 2026',
     };
+
+    setRegisteredUsers((prev) => [newUser, ...prev]);
     setCurrentUser(newUser);
     setIsAuthenticated(true);
+
     const firstName = newUser.name.split(' ')[0];
     Alert.alert('Account Created', `Welcome to Finance & Budget Tracker, ${firstName}!`);
     showToast(`Account successfully created for ${firstName}!`);
+    return newUser;
   };
 
   const logout = () => {
@@ -176,10 +242,13 @@ export const FinanceProvider = ({ children }) => {
   const switchRole = (newRole) => {
     setRole(newRole);
     if (newRole === 'admin') {
-      setCurrentUser(defaultAdmin);
+      const adminUser = registeredUsers.find((u) => u.role === 'admin') || defaultAdmin;
+      setCurrentUser(adminUser);
       showToast('Switched to Admin Role');
     } else {
-      setCurrentUser(defaultCustomer);
+      // Find the last customer in registeredUsers
+      const customerUser = registeredUsers.find((u) => u.role === 'customer') || defaultCustomer;
+      setCurrentUser(customerUser);
       showToast('Switched to Customer Role');
     }
   };
