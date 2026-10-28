@@ -30,7 +30,7 @@ const TabNavigator = () => {
           let iconName;
 
           if (route.name === 'Home') {
-            iconName = focused ? 'compass' : 'compass-outline';
+            iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Analysis') {
             iconName = focused ? 'analytics' : 'analytics-outline';
           } else if (route.name === 'Transactions') {
@@ -58,7 +58,7 @@ const TabNavigator = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Studio',
+          tabBarLabel: 'Home',
         }}
       />
 

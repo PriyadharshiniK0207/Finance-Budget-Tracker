@@ -1,11 +1,11 @@
 /**
- * Modern Wealth Studio Design System
+ * Finance & Budget Design System
  * Distinctive Luxury Editorial Financial Palette
  * MCA Semester III End-of-Semester Practical Exam
  */
 
 export const colors = {
-  // Brand Foundation - Modern Wealth Studio
+  // Brand Foundation - Finance & Budget
   primary: '#17233F',            // Deep Midnight Navy
   primaryDark: '#0E172B',        // Obsidian Navy
   primaryDeep: '#080E1C',
@@ -42,7 +42,7 @@ export const colors = {
   infoLight: '#EDF4FA',
 
   // Surfaces & Backgrounds - Soft Ivory & Alabaster
-  background: '#F7F6F1',         // Soft Ivory Studio Canvas
+  background: '#F7F6F1',         // Soft Ivory Canvas
   surface: '#FFFFFF',            // Crisp Fine Paper White
   surfaceElevated: '#FFFFFF',
   card: '#FFFFFF',

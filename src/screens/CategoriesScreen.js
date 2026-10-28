@@ -53,7 +53,7 @@ const CategoriesScreen = ({ navigation }) => {
           </View>
         )}
 
-        {/* Overall Category Budget Summary Card - Modern Wealth Studio Hero */}
+        {/* Overall Category Budget Summary Card */}
         <View style={styles.summaryCard}>
           <View style={styles.summaryTopRow}>
             <View>

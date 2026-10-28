@@ -19,7 +19,7 @@ const CustomDrawerContent = (props) => {
   const handleLogout = () => {
     Alert.alert(
       'Sign Out Confirmation',
-      'Are you sure you want to sign out from Modern Wealth Studio?',
+      'Are you sure you want to sign out from Finance & Budget?',
       [
         { text: 'Cancel', style: 'cancel' },
         {
@@ -57,7 +57,7 @@ const CustomDrawerContent = (props) => {
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      {/* Drawer User Header Section - Midnight Studio Header */}
+      {/* Drawer User Header Section */}
       <View style={styles.header}>
         <View style={styles.avatarRow}>
           <View style={styles.avatar}>
@@ -100,7 +100,7 @@ const CustomDrawerContent = (props) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.menuScroll}
       >
-        <Text style={styles.sectionHeader}>WEALTH STUDIO PORTFOLIO</Text>
+        <Text style={styles.sectionHeader}>FINANCE & BUDGET MENU</Text>
 
         {/* Dashboard */}
         <TouchableOpacity
@@ -193,9 +193,9 @@ const CustomDrawerContent = (props) => {
 
         {/* Role Switcher Action */}
         <View style={styles.roleSwitchCard}>
-          <Text style={styles.roleSwitchTitle}>Role Toggle (Exam Evaluator)</Text>
+          <Text style={styles.roleSwitchTitle}>Quick Role Switcher</Text>
           <Text style={styles.roleSwitchSubtitle}>
-            Active Role: <Text style={{ fontWeight: '800', color: colors.primary }}>{isAdmin ? 'Administrator' : 'Customer'}</Text>
+            Active Role: <Text style={{ fontWeight: '800', color: colors.primary }}>{isAdmin ? 'Admin' : 'Customer'}</Text>
           </Text>
           <TouchableOpacity
             style={[
@@ -230,7 +230,7 @@ const CustomDrawerContent = (props) => {
         </TouchableOpacity>
 
         <Text style={styles.versionText}>
-          Modern Wealth Studio • MCA Sem III EoS
+          Finance & Budget • MCA Sem III EoS
         </Text>
       </View>
     </SafeAreaView>

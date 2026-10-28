@@ -76,15 +76,15 @@ const SignUpScreen = ({ navigation }) => {
               <Ionicons name="arrow-back" size={20} color={colors.primary} />
             </TouchableOpacity>
             <View style={styles.headerTextWrap}>
-              <Text style={styles.preTitle}>MODERN WEALTH STUDIO</Text>
-              <Text style={styles.headerTitle}>Open Wealth Account</Text>
+              <Text style={styles.headerTitle}>Create Account</Text>
+              <Text style={styles.headerSubtitle}>Sign up for Finance & Budget</Text>
             </View>
           </View>
 
           {/* Form Card */}
           <View style={styles.card}>
             {/* Role Selection */}
-            <Text style={styles.inputLabel}>ACCOUNT MEMBERSHIP TYPE</Text>
+            <Text style={styles.inputLabel}>Select Your Role</Text>
             <View style={styles.roleContainer}>
               <TouchableOpacity
                 style={[
@@ -130,19 +130,19 @@ const SignUpScreen = ({ navigation }) => {
                     role === 'admin' && styles.roleButtonTextActive,
                   ]}
                 >
-                  Administrator
+                  Admin
                 </Text>
               </TouchableOpacity>
             </View>
 
             {/* Full Name */}
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>FULL LEGAL NAME *</Text>
+              <Text style={styles.inputLabel}>Full Name *</Text>
               <View style={[styles.inputWrapper, errors.name && styles.inputWrapperError]}>
                 <Ionicons name="person-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="e.g. Vikram or Priyadharshini K"
+                  placeholder="Enter your full name"
                   placeholderTextColor={colors.textMuted}
                   value={name}
                   onChangeText={(text) => {
@@ -156,12 +156,12 @@ const SignUpScreen = ({ navigation }) => {
 
             {/* Email Address */}
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>EMAIL ADDRESS *</Text>
+              <Text style={styles.inputLabel}>Email Address *</Text>
               <View style={[styles.inputWrapper, errors.email && styles.inputWrapperError]}>
                 <Ionicons name="mail-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="e.g. vikram@gmail.com"
+                  placeholder="Enter your email"
                   placeholderTextColor={colors.textMuted}
                   value={email}
                   onChangeText={(text) => {
@@ -177,12 +177,12 @@ const SignUpScreen = ({ navigation }) => {
 
             {/* Phone Number */}
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>MOBILE PHONE NUMBER *</Text>
+              <Text style={styles.inputLabel}>Phone Number *</Text>
               <View style={[styles.inputWrapper, errors.phone && styles.inputWrapperError]}>
                 <Ionicons name="call-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="e.g. 9876543210"
+                  placeholder="Enter your phone number"
                   placeholderTextColor={colors.textMuted}
                   value={phone}
                   onChangeText={(text) => {
@@ -198,12 +198,12 @@ const SignUpScreen = ({ navigation }) => {
 
             {/* Password */}
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>CONFIDENTIAL PASSWORD (MIN 6 CHARACTERS) *</Text>
+              <Text style={styles.inputLabel}>Password (min 6 characters) *</Text>
               <View style={[styles.inputWrapper, errors.password && styles.inputWrapperError]}>
                 <Ionicons name="lock-closed-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="Create a strong password"
+                  placeholder="Enter your password"
                   placeholderTextColor={colors.textMuted}
                   value={password}
                   onChangeText={(text) => {
@@ -226,12 +226,12 @@ const SignUpScreen = ({ navigation }) => {
 
             {/* Confirm Password */}
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>VERIFY PASSWORD *</Text>
+              <Text style={styles.inputLabel}>Confirm Password *</Text>
               <View style={[styles.inputWrapper, errors.confirmPassword && styles.inputWrapperError]}>
                 <Ionicons name="shield-checkmark-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="Re-enter security password"
+                  placeholder="Re-enter your password"
                   placeholderTextColor={colors.textMuted}
                   value={confirmPassword}
                   onChangeText={(text) => {
@@ -251,15 +251,15 @@ const SignUpScreen = ({ navigation }) => {
               onPress={handleSignUp}
               activeOpacity={0.8}
             >
-              <Text style={styles.primaryButtonText}>Establish Wealth Account</Text>
-              <Ionicons name="checkmark-circle" size={17} color={colors.accent} style={{ marginLeft: 6 }} />
+              <Text style={styles.primaryButtonText}>Sign Up</Text>
+              <Ionicons name="checkmark-circle" size={17} color="#FFFFFF" style={{ marginLeft: 6 }} />
             </TouchableOpacity>
 
             {/* Return to Sign In */}
             <View style={styles.switchRow}>
               <Text style={styles.switchText}>Already have an account? </Text>
               <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-                <Text style={styles.switchLink}>Sign In Here</Text>
+                <Text style={styles.switchLink}>Sign In</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -301,17 +301,17 @@ const styles = StyleSheet.create({
   headerTextWrap: {
     flex: 1,
   },
-  preTitle: {
-    fontSize: 9,
-    fontWeight: '800',
-    color: colors.accentDark,
-    letterSpacing: 1.5,
-  },
   headerTitle: {
     fontSize: 20,
     fontWeight: '800',
     color: colors.primary,
     letterSpacing: -0.3,
+  },
+  headerSubtitle: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginTop: 2,
+    fontWeight: '500',
   },
   card: {
     backgroundColor: colors.surface,
@@ -326,10 +326,9 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
   },
   inputLabel: {
-    fontSize: 10,
-    fontWeight: '800',
-    color: colors.textMuted,
-    letterSpacing: 0.8,
+    fontSize: 12,
+    fontWeight: '700',
+    color: colors.primary,
     marginBottom: 6,
   },
   roleContainer: {

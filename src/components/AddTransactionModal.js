@@ -89,7 +89,7 @@ const AddTransactionModal = ({ visible, onClose }) => {
           <View style={styles.header}>
             <View>
               <Text style={styles.headerTitle}>Record Transaction</Text>
-              <Text style={styles.headerSubtitle}>Modern Wealth Studio Journal</Text>
+              <Text style={styles.headerSubtitle}>Finance & Budget Journal</Text>
             </View>
             <TouchableOpacity
               style={styles.closeBtn}

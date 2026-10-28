@@ -48,8 +48,8 @@ const HomeScreen = ({ navigation }) => {
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       {/* App Header with Drawer Hamburger & Quick Add */}
       <CustomHeader
-        title="Modern Wealth Studio"
-        subtitle="Private Wealth & Treasury"
+        title="Finance & Budget"
+        subtitle="Personal Wealth & Expense Tracker"
         navigation={navigation}
         onAddPress={() => setModalVisible(true)}
       />
@@ -61,7 +61,7 @@ const HomeScreen = ({ navigation }) => {
         {/* Editorial Welcome Card */}
         <View style={styles.welcomeCard}>
           <View style={styles.welcomeTextWrap}>
-            <Text style={styles.welcomePre}>PORTFOLIO OVERVIEW</Text>
+            <Text style={styles.welcomePre}>FINANCIAL OVERVIEW</Text>
             <Text style={styles.greetingText}>
               Welcome,{' '}
               <Text style={{ fontWeight: '800', color: colors.primary }}>
@@ -69,7 +69,7 @@ const HomeScreen = ({ navigation }) => {
               </Text>
             </Text>
             <Text style={styles.welcomeSubtext}>
-              {isAdmin ? 'System Audit & Capital Oversight' : 'Personal Treasury & Spending Plan'}
+              {isAdmin ? 'System Audit & Capital Oversight' : 'Personal Budget & Expense Plan'}
             </Text>
           </View>
           <View style={[styles.roleBadge, isAdmin ? styles.roleBadgeAdmin : styles.roleBadgeCustomer]}>
@@ -257,7 +257,7 @@ const HomeScreen = ({ navigation }) => {
 
         {/* Quick Nav Shortcuts */}
         <View style={styles.quickNavSection}>
-          <Text style={styles.sectionTitle}>Studio Modules</Text>
+          <Text style={styles.sectionTitle}>Quick Modules</Text>
           <View style={styles.quickNavGrid}>
             <TouchableOpacity
               style={styles.quickNavBtn}

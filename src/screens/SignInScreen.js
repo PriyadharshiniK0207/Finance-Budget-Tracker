@@ -38,26 +38,6 @@ const SignInScreen = ({ navigation }) => {
     });
   };
 
-  // Quick Demo Autofill for Exam Evaluators (Refined & Integrated)
-  const handleAutofillDemo = (demoRole) => {
-    if (demoRole === 'admin') {
-      setEmail('admin@financetracker.com');
-      setPassword('admin123');
-      setRole('admin');
-      login('admin@financetracker.com', 'admin123', 'admin');
-    } else {
-      setEmail('priya@example.com');
-      setPassword('password123');
-      setRole('customer');
-      login('priya@example.com', 'password123', 'customer');
-    }
-
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'DrawerRoot' }],
-    });
-  };
-
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
@@ -68,31 +48,30 @@ const SignInScreen = ({ navigation }) => {
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          {/* Distinctive Wealth Studio Brand Emblem */}
+          {/* Brand Logo & Header matching Screenshot 4 */}
           <View style={styles.brandContainer}>
             <View style={styles.emblemWrapper}>
               <View style={styles.emblemOuter}>
-                <Ionicons name="sparkles" size={24} color={colors.accent} />
+                <Ionicons name="wallet" size={28} color="#FFFFFF" />
               </View>
             </View>
-            <Text style={styles.studioPreTitle}>MODERN WEALTH STUDIO</Text>
             <Text style={styles.brandTitle}>Finance & Budget</Text>
             <Text style={styles.brandSubtitle}>
-              Private Wealth Management & Institutional Budgeting
+              Personal Wealth & Expense Tracker
             </Text>
           </View>
 
-          {/* Luxury Main Sign In Card */}
+          {/* Welcome Back Sign In Card matching Screenshot 4 */}
           <View style={styles.card}>
             <View style={styles.cardHeaderWrap}>
-              <Text style={styles.formTitle}>Portfolio Sign In</Text>
+              <Text style={styles.formTitle}>Welcome Back</Text>
               <Text style={styles.formSubtitle}>
-                Access your personalized ledger and wealth analytics
+                Sign in to manage your budget and finances
               </Text>
             </View>
 
             {/* Role Selection Switcher */}
-            <Text style={styles.inputLabel}>SELECT ACCOUNT PRIVILEGE</Text>
+            <Text style={styles.inputLabel}>Select Your Role</Text>
             <View style={styles.roleContainer}>
               <TouchableOpacity
                 style={[
@@ -138,19 +117,19 @@ const SignInScreen = ({ navigation }) => {
                     role === 'admin' && styles.roleButtonTextActive,
                   ]}
                 >
-                  Administrator
+                  Admin
                 </Text>
               </TouchableOpacity>
             </View>
 
             {/* Email Field */}
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>EMAIL ADDRESS</Text>
+              <Text style={styles.inputLabel}>Email Address</Text>
               <View style={[styles.inputWrapper, errors.email && styles.inputWrapperError]}>
                 <Ionicons name="mail-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="e.g. priya@example.com or vikram@gmail.com"
+                  placeholder="Enter your email"
                   placeholderTextColor={colors.textMuted}
                   value={email}
                   onChangeText={(text) => {
@@ -166,12 +145,12 @@ const SignInScreen = ({ navigation }) => {
 
             {/* Password Field */}
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>CONFIDENTIAL PASSWORD</Text>
+              <Text style={styles.inputLabel}>Password</Text>
               <View style={[styles.inputWrapper, errors.password && styles.inputWrapperError]}>
                 <Ionicons name="lock-closed-outline" size={17} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="Enter your security password"
+                  placeholder="Enter your password"
                   placeholderTextColor={colors.textMuted}
                   value={password}
                   onChangeText={(text) => {
@@ -201,46 +180,15 @@ const SignInScreen = ({ navigation }) => {
               onPress={handleSignIn}
               activeOpacity={0.8}
             >
-              <Text style={styles.primaryButtonText}>Authenticate & Enter</Text>
-              <Ionicons name="arrow-forward" size={16} color={colors.accent} style={{ marginLeft: 6 }} />
+              <Text style={styles.primaryButtonText}>Sign In</Text>
+              <Ionicons name="arrow-forward" size={16} color="#FFFFFF" style={{ marginLeft: 6 }} />
             </TouchableOpacity>
 
             {/* Switch to Sign Up */}
             <View style={styles.switchRow}>
-              <Text style={styles.switchText}>New to Wealth Studio? </Text>
+              <Text style={styles.switchText}>Don't have an account? </Text>
               <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                <Text style={styles.switchLink}>Open An Account</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          {/* Refined Evaluator Quick-Access Footer (Clean & Discreet) */}
-          <View style={styles.evaluatorCard}>
-            <View style={styles.evaluatorHeader}>
-              <Ionicons name="key-outline" size={14} color={colors.accentDark} />
-              <Text style={styles.evaluatorTitle}>EXAM EVALUATOR SHORTCUTS</Text>
-            </View>
-            <View style={styles.evaluatorButtonsRow}>
-              <TouchableOpacity
-                style={styles.evaluatorBtn}
-                onPress={() => handleAutofillDemo('customer')}
-                activeOpacity={0.7}
-              >
-                <Ionicons name="person-circle-outline" size={13} color={colors.secondary} style={{ marginRight: 4 }} />
-                <Text style={[styles.evaluatorBtnText, { color: colors.secondaryDark }]}>
-                  Customer (Priya)
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.evaluatorBtn}
-                onPress={() => handleAutofillDemo('admin')}
-                activeOpacity={0.7}
-              >
-                <Ionicons name="shield-outline" size={13} color={colors.primary} style={{ marginRight: 4 }} />
-                <Text style={[styles.evaluatorBtnText, { color: colors.primary }]}>
-                  Admin Manager
-                </Text>
+                <Text style={styles.switchLink}>Sign Up</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -285,13 +233,6 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: colors.accent,
   },
-  studioPreTitle: {
-    fontSize: 10,
-    fontWeight: '800',
-    color: colors.accentDark,
-    letterSpacing: 2,
-    marginBottom: 4,
-  },
   brandTitle: {
     fontSize: 24,
     fontWeight: '800',
@@ -299,7 +240,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
   },
   brandSubtitle: {
-    fontSize: 12,
+    fontSize: 13,
     color: colors.textSecondary,
     marginTop: 4,
     textAlign: 'center',
@@ -318,26 +259,25 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
   },
   cardHeaderWrap: {
-    marginBottom: 16,
+    marginBottom: 18,
   },
   formTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '800',
     color: colors.primary,
     letterSpacing: -0.3,
   },
   formSubtitle: {
-    fontSize: 12,
+    fontSize: 13,
     color: colors.textMuted,
-    marginTop: 3,
+    marginTop: 4,
     fontWeight: '500',
   },
   inputLabel: {
-    fontSize: 10,
-    fontWeight: '800',
-    color: colors.textMuted,
-    letterSpacing: 0.8,
-    marginBottom: 6,
+    fontSize: 12,
+    fontWeight: '700',
+    color: colors.primary,
+    marginBottom: 8,
   },
   roleContainer: {
     flexDirection: 'row',
@@ -441,46 +381,6 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     color: colors.secondaryDark,
     letterSpacing: 0.2,
-  },
-  evaluatorCard: {
-    marginTop: 20,
-    backgroundColor: colors.surface,
-    padding: 12,
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  evaluatorHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
-    paddingHorizontal: 4,
-  },
-  evaluatorTitle: {
-    fontSize: 10,
-    fontWeight: '800',
-    color: colors.textMuted,
-    letterSpacing: 0.8,
-    marginLeft: 6,
-  },
-  evaluatorButtonsRow: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  evaluatorBtn: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 8,
-    borderRadius: 8,
-    backgroundColor: colors.background,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  evaluatorBtnText: {
-    fontSize: 11,
-    fontWeight: '700',
   },
 });
 
